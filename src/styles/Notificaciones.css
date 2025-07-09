@@ -1,0 +1,171 @@
+/* Notificaciones.css */
+
+.notificaciones-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: black;
+}
+
+.filtros {
+  margin-bottom: 20px;
+}
+
+.filtros label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.lista-solicitudes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.solicitud-card {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  color: black;
+  position: relative;
+  transition: box-shadow 0.3s;
+}
+
+.solicitud-card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.solicitud-card:hover .mini-mapa {
+  display: block;
+}
+
+.solicitud-card h4,
+.solicitud-card p {
+  margin: 4px 0;
+  font-weight: bold;
+  color: black;
+}
+
+.asientos {
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.asiento-label {
+  background-color: #b2ebf2;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.acciones-reserva {
+  margin-top: 10px;
+}
+
+.btn-confirmar {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-rechazar {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mini-mapa {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 10;
+  margin-top: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.fila-mapa {
+  display: flex;
+}
+
+.asiento-mapa {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+  font-weight: bold;
+  background-color: #eaeaea;
+  border-radius: 4px;
+  color: black;
+}
+
+.asiento-mapa.seleccionado {
+  background-color: #f44336;
+  color: white;
+}
+
+.asiento-mapa.pasillo {
+  background-color: #eee;
+}
+
+.asiento-mapa.conductor {
+  background-color: #ffeb3b;
+}
+
+.asiento-mapa.libre {
+  background-color: #c8e6c9;
+}
+
+.simbologia-mini {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.cuadro-simbologia {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 4px;
+  border: 1px solid #333;
+}
+
+.cuadro-simbologia.seleccionado {
+  background-color: #f44336;
+}
+
+.cuadro-simbologia.libre {
+  background-color: #c8e6c9;
+}
+
+.cuadro-simbologia.pasillo {
+  background-color: #eee;
+}
+
+.cuadro-simbologia.conductor {
+  background-color: #ffeb3b;
+}
+
+.solicitud-card strong {
+  color: black;
+  font-weight: bold;
+}

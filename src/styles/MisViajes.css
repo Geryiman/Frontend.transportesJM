@@ -1,0 +1,68 @@
+.notificaciones-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  color: #111;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.notificaciones-container h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filtros label {
+  font-weight: bold;
+}
+
+.filtros select,
+.filtros input {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.lista-solicitudes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.viaje-card {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.viaje-card:hover {
+  transform: translateY(-2px);
+}
+
+.viaje-card.futuro {
+  background-color: #d0f0f7;
+}
+
+.viaje-card.pasado {
+  background-color: #eee;
+}
+
+.viaje-card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+}
+
+.viaje-card strong {
+  color: #333;
+}

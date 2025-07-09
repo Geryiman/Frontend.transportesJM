@@ -1,0 +1,175 @@
+.plantilla-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+    font-family: sans-serif;
+  }
+  
+  .plantilla-form input,
+  .plantilla-form select {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .selector-tipo button {
+    margin: 0.3rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .selector-tipo .activo {
+    font-weight: bold;
+    border: 2px solid black;
+  }
+  
+  .matriz-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+  
+  .matriz {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .fila {
+    display: flex;
+  }
+  
+  .celda {
+    width: 60px;
+    height: 60px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin: 0; /* ← quitamos separación entre celdas */
+    border-radius: 0; /* ← base sin bordes redondeados */
+  }
+  
+  .celda.vacia {
+    background-color: #ccc;
+    margin: 3px;
+    border-radius: 8px;
+  }
+  
+  .celda.asiento {
+    background-color: #27AE60;
+    color: white;
+    margin: 3px;
+    border-radius: 8px;
+  }
+  
+
+  .celda.conductor {
+    color: white;
+  }
+  
+  .celda.pasillo {
+    background-color: #F39C12;
+    color: white;
+    margin: 3px;
+    border-radius: 8px;
+  }
+  
+  
+  .celda.conductor {
+    background-color: #2980B9;
+  }
+  
+  .extremo-izq {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  
+  .extremo-der {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .solo {
+    border-radius: 8px;
+  }
+  
+  
+  .botones-globales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .botones-globales button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .botones-globales button:hover {
+    background-color: #dcdcdc;
+  }
+  
+  .contador {
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .btn-guardar {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #1F6FEB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .btn-guardar:hover {
+    background-color: #155bb5;
+  }
+  
+  .mensaje {
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+  .celda {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+  }
+  .matriz, .fila {
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .celda.pasillo {
+    background-color: #F39C12;
+    color: white;
+    margin: 3px;
+    border-radius: 8px;
+  }
+  .etiqueta-fila {
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-align: center;
+    color: #2980B9;
+  }
+  

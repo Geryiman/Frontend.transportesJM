@@ -1,0 +1,150 @@
+.reserva-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #aec4e6;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+h2, h3 {
+  font-weight: bold;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.form-busqueda {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.form-busqueda select,
+.form-busqueda button {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.lista-viajes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.viaje-card {
+  border: 1px solid #110e0e;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #bbe7ec;
+  cursor: pointer;
+  width: 220px;
+  transition: background-color 0.3s;
+}
+
+.viaje-card:hover {
+  background-color: #b2ebf2;
+}
+
+.info-viaje p,
+.simbologia span,
+.form-reserva label {
+  font-weight: bold;
+  margin: 5px 0;
+  color: black;
+}
+
+.simbologia {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.cuadro {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border: 1px solid #333;
+}
+
+.disponible { background-color: #a5d6a7; }
+.ocupado { background-color: #ef9a9a; }
+.seleccionado { background-color: #81d4fa; }
+.conductor { background-color: #fff176; }
+.pasillo { background-color: #e0e0e0; }
+
+.form-reserva {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-reserva input[type="text"],
+.form-reserva select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-reserva button {
+  padding: 10px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-reserva button:hover {
+  background-color: #005fa3;
+}
+
+.unidades-grid {
+  display: grid;
+  gap: 5px;
+  margin: 10px 0 30px;
+  justify-content: center;
+}
+
+.asiento {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #888;
+}
+
+.asiento.asiento {
+  background-color: #c8e6c9;
+}
+
+.asiento.ocupado {
+  background-color: #f44336;
+  color: white;
+  cursor: not-allowed;
+}
+
+.asiento.seleccionado {
+  background-color: #2196f3;
+  color: white;
+}
+
+.asiento.conductor {
+  background-color: #fff176;
+}
+
+.asiento.pasillo {
+  background-color: #eeeeee;
+  cursor: default;
+}

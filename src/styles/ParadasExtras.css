@@ -1,0 +1,51 @@
+.paradas-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  color: black;
+}
+
+.form-agregar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-agregar input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+.form-agregar button {
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.lista-paradas {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-paradas li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f1f1f1;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+
+.lista-paradas .eliminar {
+  background: #e53935;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 8px;
+}

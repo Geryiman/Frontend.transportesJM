@@ -1,0 +1,95 @@
+/* Estilo base */
+.navbar {
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 2px solid #ccc;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Estilo cuando hace scroll */
+.navbar.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #ffffffee;
+  backdrop-filter: blur(4px);
+}
+
+/* Header interno */
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  font-weight: bold;
+  color: #1F3A93;
+  font-size: 1.2rem;
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #1F3A93;
+  display: none;
+  cursor: pointer;
+}
+
+/* Enlaces navbar - estilo base */
+.navbar-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+/* Enlaces */
+.navbar-links li a {
+  text-decoration: none;
+  color: #1F3A93;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+  color: #3e5ba8;
+}
+
+/* ✅ Responsive con animación suave */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out, padding-top 0.39s ease-in-out;
+    width: 100%;
+  }
+
+  .navbar-links.open {
+    max-height: 500px;
+    padding-top: 10px;
+  }
+
+  .navbar-links li {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .navbar-links li a {
+    width: 100%;
+    padding-left: 10px;
+  }
+}

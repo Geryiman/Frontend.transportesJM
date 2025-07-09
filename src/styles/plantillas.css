@@ -1,0 +1,128 @@
+.plantillas-container {
+    padding: 2rem;
+    font-family: sans-serif;
+  }
+  
+  .plantillas-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1F3A93;
+  }
+  
+  .plantillas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .plantilla-card {
+    background: #fff;
+    border: 1px solid #3d3c3c;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    color: #0e0a0a;
+  }
+  
+  .plantilla-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .plantilla-card h3 {
+    margin: 0 0 0.5rem 0;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #2c3e50;
+  }
+  
+  .plantilla-card input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .plantilla-card p {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .preview-label {
+    margin-top: 1rem;
+    font-weight: bold;
+    font-size: 0.85rem;
+  }
+  
+  .preview-miniatura {
+    margin-top: 0.5rem;
+    background: #f9f9f9;
+    border: 1px dashed #ccc;
+    padding: 0.5rem;
+    border-radius: 8px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #555;
+  }
+  
+  .botones-acciones {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .botones-acciones button {
+    background-color: #1F6FEB;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .botones-acciones button:hover {
+    background-color: #155bb5;
+  }
+  
+  .botones-acciones button:last-child {
+    background-color: #E74C3C;
+  }
+  
+  .botones-acciones button:last-child:hover {
+    background-color: #c0392b;
+  }
+  .mini-matriz {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .mini-fila {
+    display: flex;
+    gap: 2px;
+  }
+  
+  .mini-celda {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background-color: #ddd;
+  }
+  
+  .mini-celda.asiento {
+    background-color: #27AE60;
+  }
+  .mini-celda.pasillo {
+    background-color: #F39C12;
+  }
+  .mini-celda.conductor {
+    background-color: #2980B9;
+  }
+  

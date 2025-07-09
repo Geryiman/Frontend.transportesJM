@@ -1,0 +1,68 @@
+.crear-usuario-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .crear-usuario-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2e7d32; /* Verde oscuro */
+    margin-bottom: 1.5rem;
+  }
+  
+  .crear-usuario-error {
+    color: #e53935;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .crear-usuario-success {
+    color: #43a047;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .crear-usuario-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  
+  .crear-usuario-input,
+  .crear-usuario-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .crear-usuario-input:focus,
+  .crear-usuario-select:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+  }
+  
+  .crear-usuario-button {
+    width: 100%;
+    background-color: #2e7d32;
+    color: white;
+    padding: 0.75rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .crear-usuario-button:hover {
+    background-color: #1b5e20;
+  }
+  
