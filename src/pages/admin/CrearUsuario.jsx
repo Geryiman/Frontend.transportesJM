@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/crearUsuario.css'; // ajusta la ruta según tu estructura
+import '../../styles/CrearUsuario.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
