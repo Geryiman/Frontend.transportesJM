@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../../styles/crearPlantillaUnidad.css';
+import { toast } from 'react-toastify';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,12 +11,17 @@ export default function CrearPlantillaUnidad() {
     Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => ''))
   );
   const [tipoActivo, setTipoActivo] = useState('asiento');
-  const [mensaje, setMensaje] = useState('');
   const [pintando, setPintando] = useState(false);
 
   const cambiarTipoCelda = (fila, col) => {
     setMatriz(prev => {
       const nueva = prev.map(f => [...f]);
+
+      if (tipoActivo === 'conductor') {
+        const yaExiste = nueva.some(fila => fila.includes('conductor'));
+        if (yaExiste) return prev; // No permite más de uno
+      }
+
       nueva[fila][col] = tipoActivo === 'eliminado' ? 'eliminado' :
                          tipoActivo === 'borrar' ? '' : tipoActivo;
       return nueva;
@@ -61,17 +67,15 @@ export default function CrearPlantillaUnidad() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const estructura = [];
     let total_asientos = 0;
     let contadorAsientos = 1;
 
-    const totalCols = matriz[0].length;
-
     matriz.forEach((fila, i) =>
       fila.forEach((tipo, j) => {
         if (tipo && tipo !== 'eliminado') {
-          const colInvertida = totalCols - j; // 🔁 Invertimos la columna
-          const celda = { fila: i + 1, col: colInvertida, tipo };
+          const celda = { fila: i + 1, col: j + 1, tipo }; // 🔄 YA NO se invierte col
           if (tipo === 'asiento') {
             celda.numero = `A${contadorAsientos}`;
             contadorAsientos++;
@@ -82,8 +86,9 @@ export default function CrearPlantillaUnidad() {
       })
     );
 
-    if (!form.nombre || !form.tipo || total_asientos === 0) {
-      setMensaje('⚠️ Completa todos los campos y marca al menos un asiento');
+    const { conductor } = contarTipos();
+    if (!form.nombre || !form.tipo || total_asientos === 0 || conductor === 0) {
+      toast.warning('⚠️ Completa todos los campos, incluye al menos un asiento y un conductor');
       return;
     }
 
@@ -95,12 +100,12 @@ export default function CrearPlantillaUnidad() {
         estructura_asientos: estructura
       });
 
-      setMensaje('✅ Plantilla guardada correctamente');
+      toast.success('✅ Plantilla guardada correctamente');
       setForm({ nombre: '', tipo: 'combi' });
       setMatriz(Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => '')));
     } catch (err) {
       console.error(err);
-      setMensaje('❌ Error al guardar la plantilla');
+      toast.error('❌ Error al guardar la plantilla');
     }
   };
 
@@ -167,10 +172,10 @@ export default function CrearPlantillaUnidad() {
           </div>
 
           <div className="botones-globales">
-            <button onClick={agregarFila}>➕ Agregar fila</button>
-            <button onClick={eliminarFila}>➖ Eliminar fila</button>
-            <button onClick={agregarColumna}>➕ Agregar columna</button>
-            <button onClick={eliminarColumna}>➖ Eliminar columna</button>
+            <button type="button" onClick={agregarFila}>➕ Agregar fila</button>
+            <button type="button" onClick={eliminarFila}>➖ Eliminar fila</button>
+            <button type="button" onClick={agregarColumna}>➕ Agregar columna</button>
+            <button type="button" onClick={eliminarColumna}>➖ Eliminar columna</button>
           </div>
         </div>
 
@@ -182,8 +187,6 @@ export default function CrearPlantillaUnidad() {
 
         <button type="submit" className="btn-guardar">Guardar Plantilla</button>
       </form>
-
-      {mensaje && <p className="mensaje">{mensaje}</p>}
     </div>
   );
 }
