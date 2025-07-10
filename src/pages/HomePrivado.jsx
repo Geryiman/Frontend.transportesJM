@@ -69,10 +69,10 @@ export default function HomePrivado() {
             </tr>
           </thead>
           <tbody>
-            <tr><td>Ciudad de México</td><td>Puebla</td><td>08:00 AM</td><td>Lunes a Sábado</td></tr>
-            <tr><td>Guadalajara</td><td>CDMX</td><td>06:00 AM</td><td>Todos los días</td></tr>
-            <tr><td>Querétaro</td><td>León</td><td>09:30 AM</td><td>Lunes a Viernes</td></tr>
-            <tr><td>Monterrey</td><td>Saltillo</td><td>07:00 PM</td><td>Viernes y Domingo</td></tr>
+            <tr><td>Ciudad de México</td><td>Zoquitlán</td><td>11:00 PM</td><td>Lunes a Domingo</td></tr>
+            <tr><td>Ciudad de México</td><td>Zoquitlán</td><td>9:30 AM y 11:00 PM</td><td>Lunes</td></tr>
+            <tr><td>Zoquitlán</td><td>Ciudad de México</td><td>12:00 PM</td><td>Lunes a Sabado</td></tr>
+            <tr><td>Zoquitlán</td><td>Ciudad de México</td><td>12:00 PM y 06:00 PM</td><td>    Domingo</td></tr>
           </tbody>
         </table>
       </section>
