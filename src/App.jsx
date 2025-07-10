@@ -21,7 +21,7 @@ import CrearViaje from './pages/admin/CrearViaje.jsx';
 import ReservarViaje from './pages/ReservarViaje.jsx';
 import ParadasExtras from './pages/admin/ParadasExtras.jsx';
 import MisViajes from './pages/MisViajes.jsx';
-
+import Contactanos from './pages/Contactanos.jsx';
 
 
 function App() {
@@ -31,6 +31,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/usuario/login" element={<Login />} />
         <Route path="/usuario/home" element={<HomePrivado />} />
+        <Route path="/usuario/contacto" element={<Contactanos />} />
+        <Route path="/contacto" element={<Contactanos />} />
+
         <Route path="/usuario/register" element={<Register />} />
         <Route path="/usuario/mis-viajes" element={<MisViajes />} />
         <Route path="/admin/login" element={<LoginAdmin />} />
@@ -40,7 +43,7 @@ function App() {
         <Route path="/usuario/perfil" element={<Perfil />} />
         <Route path='/usuario/reservarviaje' element={<ReservarViaje />} />
 
-    
+
 
         <Route
           path="/admin/CrearPlantillaUnidad"

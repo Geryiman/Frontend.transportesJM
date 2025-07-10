@@ -15,7 +15,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [administradores, setAdministradores] = useState([]);
-  const [confirm, setConfirm] = useState(null); // {tipo, id, accion, nombre}
+  const [confirm, setConfirm] = useState(null);
   const [error, setError] = useState('');
   const [busqueda, setBusqueda] = useState('');
   const [mostrarUsuarios, setMostrarUsuarios] = useState(true);

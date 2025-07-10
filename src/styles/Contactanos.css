@@ -1,0 +1,54 @@
+.contact-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 2rem;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-container h1 {
+  font-size: 2.5rem;
+  color: #1F3A93;
+  margin-bottom: 1rem;
+}
+
+.slogan {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.contact-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.contact-card h2 {
+  color: #1F3A93;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.contact-card a:hover {
+  text-decoration: underline;
+}
+
+.extra-info {
+  font-size: 1rem;
+  color: #555;
+}
+
+.mensaje-importante {
+  color: #1F3A93;
+  font-weight: bold;
+  margin-top: 1.5rem;
+}
