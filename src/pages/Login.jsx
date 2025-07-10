@@ -10,20 +10,28 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Limpia cualquier sesión previa al entrar
+  // Redirigir si ya hay sesión activa
   useEffect(() => {
-    localStorage.clear();
-  }, []);
+    const usuario = localStorage.getItem('usuario');
+    if (usuario) {
+      navigate('/usuario/home');
+    } else {
+      localStorage.clear(); // Limpia solo si no hay sesión
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError('');
 
-    if (!username || !password) {
+    if (username.trim() === '' || password.trim() === '') {
       setError('Todos los campos son obligatorios');
       return;
     }
 
+    setLoading(true);
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -35,6 +43,8 @@ export default function Login() {
 
       if (!response.ok) {
         setError(data.message || 'Error al iniciar sesión');
+      } else if (data.user.estado === 'bloqueado') {
+        setError('Tu cuenta ha sido bloqueada. Contacta a soporte.');
       } else {
         localStorage.setItem('token', data.token);
         localStorage.setItem('usuario', JSON.stringify(data.user));
@@ -42,15 +52,20 @@ export default function Login() {
       }
     } catch (err) {
       setError('No se pudo conectar con el servidor');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
       <NavbarPublico />
+
       <div className="login-container">
         <h2>Iniciar Sesión</h2>
+
         {error && <p className="error">{error}</p>}
+
         <form onSubmit={handleLogin}>
           <input
             type="text"
@@ -64,7 +79,9 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Entrar</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Cargando...' : 'Entrar'}
+          </button>
         </form>
       </div>
     </div>
