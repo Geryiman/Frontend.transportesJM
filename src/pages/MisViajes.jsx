@@ -14,6 +14,8 @@ export default function MisViajes() {
   const [fechaDesde, setFechaDesde] = useState('');
   const [fechaHasta, setFechaHasta] = useState('');
   const [busqueda, setBusqueda] = useState('');
+  const [hoveredUnidadId, setHoveredUnidadId] = useState(null);
+
 
   useEffect(() => {
     obtenerReservas();
@@ -66,6 +68,8 @@ export default function MisViajes() {
 
   const generarMapaAsientos = (grupo) => {
     const unidadId = grupo[0].id_unidad_viaje;
+    if (hoveredUnidadId !== unidadId) return null;
+
     const estructura = estructuraMapas[unidadId];
     if (!estructura) return null;
 
@@ -90,12 +94,13 @@ export default function MisViajes() {
     return <div className="mini-mapa">{mapa}</div>;
   };
 
+
   return (
     <>
       <NavbarPrivado />
       <div className="notificaciones-container">
         <h2>🚌 Mis Reservaciones</h2>
-        
+
         <div className="filtros">
           <label>Estado:</label>
           <select value={estadoFiltro} onChange={e => setEstadoFiltro(e.target.value)}>
@@ -121,14 +126,23 @@ export default function MisViajes() {
         </div>
 
         {reservas.map((grupo, idx) => (
-          <div key={idx} className="solicitud-card" onMouseEnter={() => cargarEstructura(grupo[0].id_unidad_viaje)}>
+          <div
+            key={idx}
+            className="solicitud-card"
+            onMouseEnter={() => {
+              setHoveredUnidadId(grupo[0].id_unidad_viaje);
+              cargarEstructura(grupo[0].id_unidad_viaje);
+            }}
+            onMouseLeave={() => setHoveredUnidadId(null)}
+          >
+
             <p><strong>{grupo.length}</strong> asiento(s)</p>
             <p><strong>Origen:</strong> {grupo[0].origen} → <strong>Destino:</strong> {grupo[0].destino}</p>
             <p><strong>Fecha:</strong> {new Date(grupo[0].fecha).toLocaleDateString()} <strong>| Hora:</strong> {grupo[0].hora}</p>
             <p><strong>Estado:</strong> {
               grupo[0].estado === 'confirmada' ? '✅ Confirmado'
-              : grupo[0].estado === 'rechazada' ? '❌ Rechazado'
-              : '⏳ Pendiente'
+                : grupo[0].estado === 'rechazada' ? '❌ Rechazado'
+                  : '⏳ Pendiente'
             }</p>
 
             <div className="asientos">
