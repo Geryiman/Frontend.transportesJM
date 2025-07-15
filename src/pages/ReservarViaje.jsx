@@ -128,7 +128,7 @@ export default function ReservarViaje() {
 
       toast.success('✅ Reserva enviada. El administrador la confirmará pronto.');
       setEstado('confirmado');
-      setTimeout(() => navigate('/'), 2000);
+      setTimeout(() => navigate('/usuario/home'), 2000);
     } catch (err) {
       console.error(err);
       toast.error('Error al reservar: ' + (err.response?.data?.error || 'Error desconocido'));
