@@ -138,22 +138,28 @@ export default function ReservarViaje() {
 
   return (
     <div className="reserva-container">
-      <h2>Reservar un Viaje</h2>
+      <h2 style={{ color: 'black' }}>Reservar un Viaje</h2>
 
       {!viajeSeleccionado ? (
         <>
           <div className="form-busqueda">
+            <label style={{ color: 'black' }}>Origen:</label>
             <select value={filtros.origen} onChange={e => setFiltros({ ...filtros, origen: e.target.value })}>
-              <option value="">Origen</option>
+              <option value="">Selecciona origen</option>
               {origenes.map((origen, i) => <option key={i} value={origen}>{origen}</option>)}
             </select>
+
+            <label style={{ color: 'black' }}>Destino:</label>
             <select value={filtros.destino} onChange={e => setFiltros({ ...filtros, destino: e.target.value })}>
-              <option value="">Destino</option>
+              <option value="">Selecciona destino</option>
               {destinos.map((destino, i) => <option key={i} value={destino}>{destino}</option>)}
             </select>
+
             <button onClick={buscarViajes}>Buscar viajes</button>
           </div>
-          {estado === 'no_resultados' && <p>No se encontraron viajes para esa búsqueda.</p>}
+
+          {estado === 'no_resultados' && <p style={{ color: 'black' }}>No se encontraron viajes para esa búsqueda.</p>}
+
           <div className="lista-viajes">
             {viajes.map((v, i) => (
               <div key={i} className="viaje-card" onClick={() => seleccionarViaje(v)}>
@@ -168,7 +174,7 @@ export default function ReservarViaje() {
       ) : (
         <>
           <button onClick={() => setViajeSeleccionado(null)}>← Volver</button>
-          <h3>{viajeSeleccionado.origen} → {viajeSeleccionado.destino}</h3>
+          <h3 style={{ color: 'black' }}>{viajeSeleccionado.origen} → {viajeSeleccionado.destino}</h3>
 
           <div className="info-viaje">
             <p><strong>Fecha:</strong> {new Date(viajeSeleccionado.fecha).toLocaleDateString()}</p>
@@ -177,41 +183,40 @@ export default function ReservarViaje() {
           </div>
 
           <form onSubmit={handleSubmit} className="form-reserva">
+            <label style={{ color: 'black' }}>Nombre del pasajero:</label>
             <input
               type="text"
-              placeholder="Nombre del pasajero"
               value={reserva.nombre_viajero}
               onChange={e => setReserva({ ...reserva, nombre_viajero: e.target.value })}
               required
             />
+
+            <label style={{ color: 'black' }}>Teléfono (opcional):</label>
             <input
               type="text"
-              placeholder="Teléfono (opcional)"
               value={reserva.telefono_viajero}
               onChange={e => setReserva({ ...reserva, telefono_viajero: e.target.value })}
             />
 
-            <label>
-              ¿En qué parada se baja?
-              <select
-                value={reserva.parada_bajada || ''}
-                onChange={e => setReserva({ ...reserva, parada_bajada: e.target.value })}
-              >
-                <option value="">Selecciona una opción</option>
-                {paradas.flatMap(p => {
-                  try {
-                    const lista = Array.isArray(p.lista) ? p.lista : JSON.parse(p.lista);
-                    return lista.map((nombre, i) => (
-                      <option key={`bajada-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
-                    ));
-                  } catch (error) {
-                    return [];
-                  }
-                })}
-              </select>
-            </label>
+            <label style={{ color: 'black' }}>Parada de bajada:</label>
+            <select
+              value={reserva.parada_bajada || ''}
+              onChange={e => setReserva({ ...reserva, parada_bajada: e.target.value })}
+            >
+              <option value="">Selecciona una opción</option>
+              {paradas.flatMap(p => {
+                try {
+                  const lista = Array.isArray(p.lista) ? p.lista : JSON.parse(p.lista);
+                  return lista.map((nombre, i) => (
+                    <option key={`bajada-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
+                  ));
+                } catch (error) {
+                  return [];
+                }
+              })}
+            </select>
 
-            <label>
+            <label style={{ color: 'black' }}>
               <input
                 type="checkbox"
                 checked={!reserva.sube_en_terminal}
@@ -221,8 +226,8 @@ export default function ReservarViaje() {
             </label>
 
             {!reserva.sube_en_terminal && (
-              <label>
-                ¿Dónde se sube?
+              <>
+                <label style={{ color: 'black' }}>Parada de subida:</label>
                 <select
                   value={reserva.parada_extra || ''}
                   onChange={e => setReserva({ ...reserva, parada_extra: e.target.value })}
@@ -239,8 +244,9 @@ export default function ReservarViaje() {
                     }
                   })}
                 </select>
-              </label>
+              </>
             )}
+
             <div className="simbologia">
               <span><span className="cuadro disponible"></span> Disponible</span>
               <span><span className="cuadro ocupado"></span> Ocupado</span>
@@ -249,7 +255,6 @@ export default function ReservarViaje() {
               <span><span className="cuadro pasillo"></span> Pasillo</span>
             </div>
 
-
             {[...new Set(asientosInfo.map(a => a.id_unidad))].sort().map((unidadId, indexUnidad) => {
               const asientosUnidad = asientosInfo.filter(a => a.id_unidad === unidadId);
               const maxCol = Math.max(...asientosUnidad.map(a => a.col));
@@ -257,7 +262,7 @@ export default function ReservarViaje() {
 
               return (
                 <div key={unidadId}>
-                  <h4>Unidad #{indexUnidad + 1}</h4>
+                  <h4 style={{ color: 'black' }}>Unidad #{indexUnidad + 1}</h4>
                   <div
                     className="unidades-grid"
                     style={{
@@ -275,7 +280,7 @@ export default function ReservarViaje() {
                         <div
                           key={index}
                           className={`asiento ${ocupado ? 'ocupado' : ''} ${seleccionado ? 'seleccionado' : ''} ${asiento.tipo}`}
-                          style={{ gridColumn: asiento.col, gridRow: asiento.fila }}
+                          style={{ gridColumn: (maxCol - asiento.col + 1), gridRow: asiento.fila }}
                           onClick={() => asiento.tipo === 'asiento' && !ocupado && toggleAsiento(asiento.id_unidad, asiento.numero)}
                         >
                           {asiento.tipo === 'asiento' ? asiento.numero : asiento.tipo === 'pasillo' ? 'P' : 'C'}
@@ -290,8 +295,8 @@ export default function ReservarViaje() {
             <button type="submit" disabled={estado === 'enviando'}>
               Confirmar Reserva
             </button>
-            {estado === 'enviando' && <p>Procesando su reserva...</p>}
-            {estado === 'confirmado' && <p>✅ Reserva realizada. El administrador confirmará su lugar.</p>}
+            {estado === 'enviando' && <p style={{ color: 'black' }}>Procesando su reserva...</p>}
+            {estado === 'confirmado' && <p style={{ color: 'green' }}>✅ Reserva realizada. El administrador confirmará su lugar.</p>}
           </form>
         </>
       )}
