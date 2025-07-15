@@ -125,10 +125,19 @@ export default function ReservarViaje() {
           asiento: sel.asiento
         });
       }
+      toast.success('✅ Tu reserva fue enviada exitosamente. Espera la confirmación del administrador.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored'
+      });
 
-      toast.success('✅ Reserva enviada. El administrador la confirmará pronto.');
       setEstado('confirmado');
-      setTimeout(() => navigate('/usuario/home'), 2000);
+      setTimeout(() => navigate('/usuario/home'), 3500);
+
     } catch (err) {
       console.error(err);
       toast.error('Error al reservar: ' + (err.response?.data?.error || 'Error desconocido'));
