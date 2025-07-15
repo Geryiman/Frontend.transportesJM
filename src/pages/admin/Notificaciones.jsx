@@ -9,7 +9,7 @@ export default function Notificaciones() {
   const [solicitudes, setSolicitudes] = useState([]);
   const [estructuraMapas, setEstructuraMapas] = useState({});
   const [filtro, setFiltro] = useState('viaje');
-  const [estado, setEstado] = useState('');
+  const [estado, setEstado] = useState('pendiente');
   const [busqueda, setBusqueda] = useState('');
   const [fechaDesde, setFechaDesde] = useState('');
   const [fechaHasta, setFechaHasta] = useState('');
