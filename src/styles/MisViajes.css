@@ -1,14 +1,16 @@
+/* MisViajes.css */
+
 .notificaciones-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
   padding: 20px;
-  color: #111;
-  font-family: 'Segoe UI', sans-serif;
+  color: #1a1a1a;
 }
 
-.notificaciones-container h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+.notificaciones-container h2,
+.notificaciones-container h3 {
+  color: #222;
+  margin-bottom: 15px;
 }
 
 .filtros {
@@ -21,14 +23,15 @@
 
 .filtros label {
   font-weight: bold;
+  color: #333;
 }
 
 .filtros select,
-.filtros input {
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  border-radius: 6px;
+.filtros input[type="date"],
+.filtros input[type="text"] {
+  padding: 6px;
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .lista-solicitudes {
@@ -38,31 +41,109 @@
 }
 
 .viaje-card {
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background-color: #fff;
+  border-left: 5px solid #0099cc;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
 }
 
 .viaje-card:hover {
-  transform: translateY(-2px);
-}
-
-.viaje-card.futuro {
-  background-color: #d0f0f7;
+  transform: scale(1.01);
 }
 
 .viaje-card.pasado {
+  background-color: #f0f0f0;
+  opacity: 0.8;
+}
+
+.viaje-card.futuro {
+  border-left-color: #00cc66;
+}
+
+.asientos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.asiento-label {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+.mini-mapa {
+  margin-top: 10px;
+  background-color: #fafafa;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.fila-mapa {
+  display: flex;
+  gap: 4px;
+}
+
+.asiento-mapa {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border: 1px solid #ccc;
+}
+
+.asiento-mapa.seleccionado {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.simbologia-mini {
+  margin-top: 8px;
+  font-size: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.cuadro-simbologia {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.cuadro-simbologia.seleccionado {
+  background-color: #007bff;
+}
+
+.cuadro-simbologia.libre {
   background-color: #eee;
 }
 
-.viaje-card p {
-  margin: 4px 0;
-  font-size: 0.95rem;
-}
+@media screen and (max-width: 768px) {
+  .filtros {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.viaje-card strong {
-  color: #333;
+  .viaje-card {
+    padding: 12px;
+  }
+
+  .asiento-label {
+    font-size: 12px;
+  }
 }
