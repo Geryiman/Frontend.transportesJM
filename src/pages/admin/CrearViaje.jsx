@@ -10,20 +10,24 @@ export default function CrearViaje() {
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
   const [precio, setPrecio] = useState('');
-  const [plantilla, setPlantilla] = useState('');
   const [numeroUnidades, setNumeroUnidades] = useState(1);
   const [paradaSubida, setParadaSubida] = useState('');
   const [paradaBajada, setParadaBajada] = useState('');
-  const [conductor, setConductor] = useState('');
   const [plantillasUnidad, setPlantillasUnidad] = useState([]);
   const [paradas, setParadas] = useState([]);
   const [conductores, setConductores] = useState([]);
   const [lugares, setLugares] = useState([]);
   const [mensaje, setMensaje] = useState('');
+  const [unidades, setUnidades] = useState([]);
 
   useEffect(() => {
     cargarDatos();
   }, []);
+
+  useEffect(() => {
+    const nuevasUnidades = Array.from({ length: numeroUnidades }, (_, i) => unidades[i] || { id_plantilla: '', id_conductor: '' });
+    setUnidades(nuevasUnidades);
+  }, [numeroUnidades]);
 
   const cargarDatos = async () => {
     try {
@@ -43,18 +47,22 @@ export default function CrearViaje() {
     }
   };
 
+  const handleUnidadChange = (index, field, value) => {
+    const nuevas = [...unidades];
+    nuevas[index][field] = value;
+    setUnidades(nuevas);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje('');
 
     if (origen === destino) {
-      setMensaje('Origen y destino no pueden ser iguales');
-      return;
+      return setMensaje('❌ Origen y destino no pueden ser iguales');
     }
 
-    if (numeroUnidades < 1) {
-      setMensaje('Debe haber al menos 1 unidad');
-      return;
+    if (numeroUnidades < 1 || unidades.some(u => !u.id_plantilla || !u.id_conductor)) {
+      return setMensaje('❌ Completa plantilla y conductor para todas las unidades');
     }
 
     try {
@@ -64,72 +72,102 @@ export default function CrearViaje() {
         fecha,
         hora,
         precio: parseFloat(precio),
-        id_plantilla_unidad: parseInt(plantilla),
-        numero_unidades: parseInt(numeroUnidades),
         id_parada_subida: paradaSubida || null,
         id_parada_bajada: paradaBajada || null,
-        id_conductor: conductor || null
+        unidades
       });
-
-      setMensaje(res.data.message || 'Viaje creado correctamente');
+      setMensaje(res.data.message || '✅ Viaje creado correctamente');
     } catch (error) {
       console.error(error);
-      setMensaje('Error al crear el viaje');
+      setMensaje('❌ Error al crear el viaje');
     }
   };
 
+  const plantillasUsadas = unidades.map(u => u.id_plantilla);
+  const conductoresUsados = unidades.map(u => u.id_conductor);
+
   return (
     <div className="form-container">
-      <h2>Crear nuevo viaje</h2>
+      <h2>🚌 Crear nuevo viaje</h2>
       {mensaje && <p className="mensaje-error">{mensaje}</p>}
       <form onSubmit={handleSubmit}>
-        <select value={origen} onChange={e => setOrigen(e.target.value)} required>
-          <option value="">Selecciona origen</option>
-          {lugares.map(l => (
-            <option key={l.id} value={l.nombre}>{l.nombre}</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label>Origen:</label>
+          <select value={origen} onChange={e => setOrigen(e.target.value)} required>
+            <option value="">Selecciona origen</option>
+            {lugares.map(l => (
+              <option key={l.id} value={l.nombre}>{l.nombre}</option>
+            ))}
+          </select>
+        </div>
 
-        <select value={destino} onChange={e => setDestino(e.target.value)} required>
-          <option value="">Selecciona destino</option>
-          {lugares.filter(l => l.nombre !== origen).map(l => (
-            <option key={l.id} value={l.nombre}>{l.nombre}</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label>Destino:</label>
+          <select value={destino} onChange={e => setDestino(e.target.value)} required>
+            <option value="">Selecciona destino</option>
+            {lugares.filter(l => l.nombre !== origen).map(l => (
+              <option key={l.id} value={l.nombre}>{l.nombre}</option>
+            ))}
+          </select>
+        </div>
 
-        <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} required />
-        <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
-        <input type="number" placeholder="Precio" value={precio} onChange={e => setPrecio(e.target.value)} required />
+        <div className="campo">
+          <label>Fecha:</label>
+          <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} required />
+        </div>
 
-        <select value={plantilla} onChange={e => setPlantilla(e.target.value)} required>
-          <option value="">Seleccionar plantilla de unidad</option>
-          {plantillasUnidad.map(p => (
-            <option key={p.id} value={p.id}>{p.nombre} ({p.tipo})</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label>Hora:</label>
+          <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
+        </div>
 
-        <input type="number" min={1} value={numeroUnidades} onChange={e => setNumeroUnidades(e.target.value)} required placeholder="Número de unidades" />
+        <div className="campo">
+          <label>Precio:</label>
+          <input type="number" placeholder="Precio" value={precio} onChange={e => setPrecio(e.target.value)} required />
+        </div>
 
-        <select value={paradaSubida} onChange={e => setParadaSubida(e.target.value)}>
-          <option value="">Sin paradas de subida</option>
-          {paradas.map(p => (
-            <option key={p.id} value={p.id}>{p.nombre}</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label>Unidades:</label>
+          <input type="number" min={1} value={numeroUnidades} onChange={e => setNumeroUnidades(parseInt(e.target.value) || 1)} required />
+        </div>
 
-        <select value={paradaBajada} onChange={e => setParadaBajada(e.target.value)}>
-          <option value="">Sin paradas de bajada</option>
-          {paradas.map(p => (
-            <option key={p.id} value={p.id}>{p.nombre}</option>
-          ))}
-        </select>
+        {unidades.map((unidad, i) => (
+          <div key={i} className="unidad-box">
+            <h4>Unidad #{i + 1}</h4>
+            <select value={unidad.id_plantilla} onChange={e => handleUnidadChange(i, 'id_plantilla', e.target.value)} required>
+              <option value="">Seleccionar plantilla</option>
+              {plantillasUnidad.filter(p => !plantillasUsadas.includes(String(p.id)) || String(p.id) === unidad.id_plantilla).map(p => (
+                <option key={p.id} value={p.id}>{p.nombre} ({p.tipo})</option>
+              ))}
+            </select>
+            <select value={unidad.id_conductor} onChange={e => handleUnidadChange(i, 'id_conductor', e.target.value)} required>
+              <option value="">Seleccionar conductor</option>
+              {conductores.filter(c => !conductoresUsados.includes(String(c.id)) || String(c.id) === unidad.id_conductor).map(c => (
+                <option key={c.id} value={c.id}>{c.nombre}</option>
+              ))}
+            </select>
+          </div>
+        ))}
 
-        <select value={conductor} onChange={e => setConductor(e.target.value)}>
-          <option value="">Seleccionar conductor</option>
-          {conductores.map(c => (
-            <option key={c.id} value={c.id}>{c.nombre}</option>
-          ))}
-        </select>
+        <div className="campo">
+          <label>Paradas extra (subida):</label>
+          <select value={paradaSubida} onChange={e => setParadaSubida(e.target.value)}>
+            <option value="">Sin paradas</option>
+            {paradas.map(p => (
+              <option key={p.id} value={p.id}>{p.nombre}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="campo">
+          <label>Paradas extra (bajada):</label>
+          <select value={paradaBajada} onChange={e => setParadaBajada(e.target.value)}>
+            <option value="">Sin paradas</option>
+            {paradas.map(p => (
+              <option key={p.id} value={p.id}>{p.nombre}</option>
+            ))}
+          </select>
+        </div>
 
         <button type="submit">Crear viaje</button>
       </form>
