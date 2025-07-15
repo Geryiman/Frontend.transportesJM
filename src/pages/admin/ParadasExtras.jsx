@@ -10,6 +10,7 @@ export default function ParadasExtras() {
   const [nombrePlantilla, setNombrePlantilla] = useState('');
   const [nuevaParada, setNuevaParada] = useState('');
   const [listaActual, setListaActual] = useState([]);
+  const [idEditando, setIdEditando] = useState(null);
 
   const [lugares, setLugares] = useState([]);
   const [nuevoLugar, setNuevoLugar] = useState('');
@@ -22,10 +23,30 @@ export default function ParadasExtras() {
     obtenerLugares();
   }, []);
 
+  const normalizarLista = (entrada) => {
+    if (Array.isArray(entrada)) return entrada;
+    if (typeof entrada === 'string') {
+      try {
+        if (entrada.trim().startsWith('[')) {
+          return JSON.parse(entrada);
+        } else {
+          return entrada.split(',').map(p => p.trim());
+        }
+      } catch {
+        return entrada.split(',').map(p => p.trim());
+      }
+    }
+    return [];
+  };
+
   const obtenerParadas = async () => {
     try {
       const res = await axios.get(`${API_URL}/paradas`);
-      setParadas(res.data);
+      const normalizadas = res.data.map(p => ({
+        ...p,
+        lista: normalizarLista(p.lista)
+      }));
+      setParadas(normalizadas);
     } catch {
       toast.error('Error al obtener plantillas de paradas');
     }
@@ -38,15 +59,29 @@ export default function ParadasExtras() {
   };
 
   const guardarPlantilla = async () => {
-    if (!nombrePlantilla.trim() || listaActual.length === 0) return toast.warn('Completa el nombre y la lista');
+    if (!nombrePlantilla.trim() || listaActual.length === 0)
+      return toast.warn('Completa el nombre y la lista');
+
     try {
-      await axios.post(`${API_URL}/paradas`, {
-        nombre: nombrePlantilla,
-        lista: listaActual,
-      });
-      toast.success('Plantilla de paradas guardada');
+      if (idEditando) {
+        // Editar
+        await axios.put(`${API_URL}/paradas/${idEditando}`, {
+          nombre: nombrePlantilla.trim(),
+          lista: listaActual,
+        });
+        toast.success('Plantilla actualizada correctamente');
+      } else {
+        // Nueva
+        await axios.post(`${API_URL}/paradas`, {
+          nombre: nombrePlantilla.trim(),
+          lista: listaActual,
+        });
+        toast.success('Plantilla guardada');
+      }
+
       setNombrePlantilla('');
       setListaActual([]);
+      setIdEditando(null);
       obtenerParadas();
     } catch {
       toast.error('Error al guardar plantilla');
@@ -58,8 +93,23 @@ export default function ParadasExtras() {
       await axios.delete(`${API_URL}/paradas/${id}`);
       toast.success('Plantilla eliminada');
       obtenerParadas();
-    } catch {
-      toast.error('Error al eliminar plantilla');
+    } catch (err) {
+      const error = err.response?.data;
+
+      if (error?.sugerencia) {
+        const confirmar = confirm(`${error.error}\n${error.sugerencia}\n¿Deseas editar esta plantilla en su lugar?`);
+        if (confirmar) {
+          const plantilla = paradas.find(p => p.id === id);
+          if (plantilla) {
+            setNombrePlantilla(plantilla.nombre);
+            setListaActual(plantilla.lista);
+            setIdEditando(plantilla.id);
+            toast.info('Editando plantilla vinculada');
+          }
+        }
+      } else {
+        toast.error('Error al eliminar plantilla');
+      }
     }
   };
 
@@ -120,12 +170,46 @@ export default function ParadasExtras() {
                 />
                 <button onClick={agregarParadaTemporal}>Añadir</button>
               </div>
-              <ul>
+              <ul className="lista-editable">
                 {listaActual.map((p, i) => (
-                  <li key={i}>{p}</li>
+                  <li key={i}>
+                    <input
+                      type="text"
+                      value={p}
+                      onChange={(e) => {
+                        const nuevaLista = [...listaActual];
+                        nuevaLista[i] = e.target.value;
+                        setListaActual(nuevaLista);
+                      }}
+                    />
+                    <button
+                      className="eliminar"
+                      title="Eliminar parada"
+                      onClick={() => {
+                        const nuevaLista = listaActual.filter((_, idx) => idx !== i);
+                        setListaActual(nuevaLista);
+                      }}
+                    >
+                      ❌
+                    </button>
+                  </li>
                 ))}
               </ul>
-              <button onClick={guardarPlantilla}>Guardar Plantilla</button>
+
+              <button onClick={guardarPlantilla}>
+                {idEditando ? 'Guardar Cambios' : 'Guardar Plantilla'}
+              </button>
+              {idEditando && (
+                <button
+                  onClick={() => {
+                    setNombrePlantilla('');
+                    setListaActual([]);
+                    setIdEditando(null);
+                  }}
+                >
+                  Cancelar Edición
+                </button>
+              )}
             </div>
 
             <ul className="lista-paradas">

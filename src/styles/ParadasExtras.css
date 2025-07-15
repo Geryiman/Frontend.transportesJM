@@ -49,3 +49,15 @@
   cursor: pointer;
   padding: 4px 8px;
 }
+.lista-editable li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.lista-editable input {
+  flex: 1;
+  padding: 6px;
+  font-size: 1rem;
+}
