@@ -168,7 +168,7 @@ export default function Notificaciones() {
               ))}
             </div>
 
-            {estado === 'pendiente' && (
+            {grupo[0].estado === 'pendiente' && (
               <div className="acciones-reserva">
                 <button className="btn-confirmar" onClick={() => aceptarReserva(grupo)}>Aceptar</button>
                 <button className="btn-rechazar" onClick={() => rechazarReserva(grupo)}>Rechazar</button>
