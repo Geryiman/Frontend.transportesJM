@@ -9,7 +9,7 @@ export default function CrearViaje() {
   const [destino, setDestino] = useState('');
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
-  const [precio, setPrecio] = useState('');
+  const [precio, setPrecio] = useState('450'); // ← PRECIO POR DEFECTO
   const [numeroUnidades, setNumeroUnidades] = useState(1);
   const [paradaSubida, setParadaSubida] = useState('');
   const [paradaBajada, setParadaBajada] = useState('');
@@ -65,6 +65,11 @@ export default function CrearViaje() {
       return setMensaje('❌ Completa plantilla y conductor para todas las unidades');
     }
 
+    const unidadesConNumero = unidades.map((u, index) => ({
+      ...u,
+      numero_unidad: index + 1 // ← SE AGREGA CAMPO OBLIGATORIO
+    }));
+
     try {
       const res = await axios.post(`${API_URL}/viajes/crear-viaje`, {
         origen,
@@ -74,7 +79,7 @@ export default function CrearViaje() {
         precio: parseFloat(precio),
         id_parada_subida: paradaSubida || null,
         id_parada_bajada: paradaBajada || null,
-        unidades
+        unidades: unidadesConNumero
       });
       setMensaje(res.data.message || '✅ Viaje creado correctamente');
     } catch (error) {
@@ -123,24 +128,44 @@ export default function CrearViaje() {
 
         <div className="campo">
           <label>Precio:</label>
-          <input type="number" placeholder="Precio" value={precio} onChange={e => setPrecio(e.target.value)} required />
+          <input
+            type="number"
+            placeholder="Precio"
+            value={precio}
+            onChange={e => setPrecio(e.target.value)}
+            required
+          />
         </div>
 
         <div className="campo">
           <label>Unidades:</label>
-          <input type="number" min={1} value={numeroUnidades} onChange={e => setNumeroUnidades(parseInt(e.target.value) || 1)} required />
+          <input
+            type="number"
+            min={1}
+            value={numeroUnidades}
+            onChange={e => setNumeroUnidades(parseInt(e.target.value) || 1)}
+            required
+          />
         </div>
 
         {unidades.map((unidad, i) => (
           <div key={i} className="unidad-box">
             <h4>Unidad #{i + 1}</h4>
-            <select value={unidad.id_plantilla} onChange={e => handleUnidadChange(i, 'id_plantilla', e.target.value)} required>
+            <select
+              value={unidad.id_plantilla}
+              onChange={e => handleUnidadChange(i, 'id_plantilla', e.target.value)}
+              required
+            >
               <option value="">Seleccionar plantilla</option>
               {plantillasUnidad.filter(p => !plantillasUsadas.includes(String(p.id)) || String(p.id) === unidad.id_plantilla).map(p => (
                 <option key={p.id} value={p.id}>{p.nombre} ({p.tipo})</option>
               ))}
             </select>
-            <select value={unidad.id_conductor} onChange={e => handleUnidadChange(i, 'id_conductor', e.target.value)} required>
+            <select
+              value={unidad.id_conductor}
+              onChange={e => handleUnidadChange(i, 'id_conductor', e.target.value)}
+              required
+            >
               <option value="">Seleccionar conductor</option>
               {conductores.filter(c => !conductoresUsados.includes(String(c.id)) || String(c.id) === unidad.id_conductor).map(c => (
                 <option key={c.id} value={c.id}>{c.nombre}</option>

@@ -1,112 +1,122 @@
 .form-container {
   max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  background-color: #f4f4f4;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #f9f9f9;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.form-container h2 {
   text-align: center;
-  color: #1a1a1a;
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
 }
 
 .campo {
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
 }
 
 .campo label {
-  font-weight: 600;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
   color: #222;
-  margin-bottom: 5px;
 }
 
 .campo input,
 .campo select {
-  padding: 10px;
-  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  font-size: 16px;
+  border-radius: 6px;
   background-color: white;
+  color: #333;
 }
 
 .unidad-box {
   border: 1px solid #ddd;
-  padding: 15px;
   border-radius: 8px;
-  background-color: #ffffff;
-  margin-top: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #fff;
 }
 
 .unidad-box h4 {
   margin-top: 0;
-  margin-bottom: 10px;
-  color: #1f1f1f;
-}
-
-.unidad-box select {
-  margin-bottom: 10px;
-  padding: 8px;
-  font-size: 15px;
-  border-radius: 6px;
-}
-
-.mensaje-error {
-  font-weight: bold;
-  color: #d8000c;
-  background-color: #ffdddd;
-  border: 1px solid #d8000c;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
+  color: #444;
 }
 
 button[type="submit"] {
-  padding: 12px;
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.1rem;
   background-color: #007bff;
   color: white;
-  font-weight: bold;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-@media (max-width: 600px) {
+.mensaje-error {
+  background-color: #ffdddd;
+  color: #a00;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #a00;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 🌐 RESPONSIVE DESIGN */
+@media (max-width: 768px) {
   .form-container {
-    padding: 15px;
-  }
-
-  .unidad-box {
-    padding: 10px;
-  }
-
-  button[type="submit"] {
-    font-size: 14px;
-    padding: 10px;
+    padding: 1rem;
   }
 
   .campo input,
   .campo select {
-    font-size: 14px;
+    font-size: 0.95rem;
+  }
+
+  .unidad-box {
+    padding: 0.8rem;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
   }
 }
 
-p {
-  color: #222;
+@media (max-width: 480px) {
+  .form-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .unidad-box h4 {
+    font-size: 1rem;
+  }
+
+  .campo label {
+    font-size: 0.9rem;
+  }
+
+  .campo input,
+  .campo select {
+    font-size: 0.9rem;
+  }
+
+  button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
 }
