@@ -1,0 +1,78 @@
+.detalle-viaje {
+  padding: 20px;
+  color: black;
+}
+
+.btn-volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: white;
+  background-color: #007bff;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.unidad {
+  margin-bottom: 40px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.plantilla {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.fila {
+  display: flex;
+}
+
+.celda {
+  width: 45px;
+  height: 45px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.celda.asiento {
+  background-color: #d1e7dd;
+}
+
+.celda.asiento.confirmado {
+  background-color: #198754;
+  color: white;
+}
+
+.celda.asiento.pendiente {
+  background-color: #ffc107;
+}
+
+.celda.pasillo {
+  background-color: #ffeeba;
+}
+
+.celda.conductor {
+  background-color: #cfe2ff;
+}
+
+.celda.vacia {
+  background-color: transparent;
+  border: none;
+}
+
+.no-asientos {
+  color: #888;
+  font-style: italic;
+}
