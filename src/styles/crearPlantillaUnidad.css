@@ -3,7 +3,6 @@
     margin: auto;
     padding: 2rem;
     font-family: sans-serif;
-    background-color: #746a6a;
   }
   
   .plantilla-form input,
@@ -11,6 +10,7 @@
     width: 100%;
     margin-bottom: 1rem;
     padding: 0.5rem;
+
   }
   
   .selector-tipo button {
@@ -31,6 +31,7 @@
     flex-direction: column;
     margin-top: 1rem;
     gap: 1rem;
+    background-color: beige;
   }
   
   .matriz {
@@ -51,6 +52,8 @@
     cursor: pointer;
     margin: 0; /* ← quitamos separación entre celdas */
     border-radius: 0; /* ← base sin bordes redondeados */
+    color: black;
+    background-color: rgb(83, 80, 80);
   }
   
   .celda.vacia {
