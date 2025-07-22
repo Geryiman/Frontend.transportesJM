@@ -1,175 +1,191 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import '../../styles/CrearViaje.css';
+import '../../styles/crearPlantillaUnidad.css';
+import { toast } from 'react-toastify';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function CrearViaje() {
-  const [origen, setOrigen] = useState('');
-  const [destino, setDestino] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('');
-  const [precio, setPrecio] = useState('');
-  const [numeroUnidades, setNumeroUnidades] = useState(1);
-  const [paradaSubida, setParadaSubida] = useState('');
-  const [paradaBajada, setParadaBajada] = useState('');
-  const [plantillasUnidad, setPlantillasUnidad] = useState([]);
-  const [paradas, setParadas] = useState([]);
-  const [conductores, setConductores] = useState([]);
-  const [lugares, setLugares] = useState([]);
-  const [mensaje, setMensaje] = useState('');
-  const [unidades, setUnidades] = useState([]);
+export default function CrearPlantillaUnidad() {
+  const [form, setForm] = useState({ nombre: '', tipo: 'combi' });
+  const [matriz, setMatriz] = useState(
+    Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => ''))
+  );
+  const [tipoActivo, setTipoActivo] = useState('asiento');
+  const [pintando, setPintando] = useState(false);
 
-  useEffect(() => {
-    cargarDatos();
-  }, []);
+  const cambiarTipoCelda = (fila, col) => {
+    setMatriz(prev => {
+      const nueva = prev.map(f => [...f]);
 
-  useEffect(() => {
-    const nuevasUnidades = Array.from({ length: numeroUnidades }, (_, i) => unidades[i] || { id_plantilla: '', id_conductor: '' });
-    setUnidades(nuevasUnidades);
-  }, [numeroUnidades]);
+      if (tipoActivo === 'conductor') {
+        const yaExiste = nueva.some(fila => fila.includes('conductor'));
+        if (yaExiste) return prev; // No permite más de uno
+      }
 
-  const cargarDatos = async () => {
-    try {
-      const [plantillasRes, paradasRes, conductoresRes, lugaresRes] = await Promise.all([
-        axios.get(`${API_URL}/viajes/plantillas-unidad`),
-        axios.get(`${API_URL}/viajes/plantillas-parada`),
-        axios.get(`${API_URL}/viajes/admins/conductores`),
-        axios.get(`${API_URL}/paradas/lugares`)
-      ]);
-      setPlantillasUnidad(plantillasRes.data);
-      setParadas(paradasRes.data);
-      setConductores(conductoresRes.data);
-      setLugares(lugaresRes.data);
-    } catch (error) {
-      console.error('Error al cargar datos:', error);
-      setMensaje('Error al cargar datos. Verifica que el backend esté ejecutándose.');
+      nueva[fila][col] = tipoActivo === 'eliminado' ? 'eliminado' :
+                         tipoActivo === 'borrar' ? '' : tipoActivo;
+      return nueva;
+    });
+  };
+
+  const handleInputChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const agregarColumna = () => {
+    setMatriz(prev => prev.map(fila => [...fila, '']));
+  };
+
+  const eliminarColumna = () => {
+    if (matriz[0].length > 1) {
+      setMatriz(prev => prev.map(fila => fila.slice(0, -1)));
     }
   };
 
-  const handleUnidadChange = (index, field, value) => {
-    const nuevas = [...unidades];
-    nuevas[index][field] = value;
-    setUnidades(nuevas);
+  const agregarFila = () => {
+    const columnas = matriz[0].length;
+    setMatriz(prev => [...prev, Array.from({ length: columnas }, () => '')]);
+  };
+
+  const eliminarFila = () => {
+    if (matriz.length > 1) {
+      setMatriz(prev => prev.slice(0, -1));
+    }
+  };
+
+  const contarTipos = () => {
+    let asientos = 0, pasillos = 0, conductor = 0;
+    matriz.forEach(fila =>
+      fila.forEach(tipo => {
+        if (tipo === 'asiento') asientos++;
+        else if (tipo === 'pasillo') pasillos++;
+        else if (tipo === 'conductor') conductor++;
+      })
+    );
+    return { asientos, pasillos, conductor };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje('');
 
-    if (origen === destino) {
-      return setMensaje('❌ Origen y destino no pueden ser iguales');
-    }
+    const estructura = [];
+    let total_asientos = 0;
+    let contadorAsientos = 1;
 
-    if (numeroUnidades < 1 || unidades.some(u => !u.id_plantilla || !u.id_conductor)) {
-      return setMensaje('❌ Completa plantilla y conductor para todas las unidades');
+    matriz.forEach((fila, i) =>
+      fila.forEach((tipo, j) => {
+        if (tipo && tipo !== 'eliminado') {
+          const celda = { fila: i + 1, col: j + 1, tipo }; // 🔄 YA NO se invierte col
+          if (tipo === 'asiento') {
+            celda.numero = `A${contadorAsientos}`;
+            contadorAsientos++;
+            total_asientos++;
+          }
+          estructura.push(celda);
+        }
+      })
+    );
+
+    const { conductor } = contarTipos();
+    if (!form.nombre || !form.tipo || total_asientos === 0 || conductor === 0) {
+      toast.warning('⚠️ Completa todos los campos, incluye al menos un asiento y un conductor');
+      return;
     }
 
     try {
-      const res = await axios.post(`${API_URL}/viajes/crear-viaje`, {
-        origen,
-        destino,
-        fecha,
-        hora,
-        precio: parseFloat(precio),
-        id_parada_subida: paradaSubida || null,
-        id_parada_bajada: paradaBajada || null,
-        unidades
+      await axios.post(`${API_URL}/viajes/crear-plantilla-unidad`, {
+        nombre: form.nombre,
+        tipo: form.tipo,
+        total_asientos,
+        estructura_asientos: estructura
       });
-      setMensaje(res.data.message || '✅ Viaje creado correctamente');
-    } catch (error) {
-      console.error(error);
-      setMensaje('❌ Error al crear el viaje');
+
+      toast.success('✅ Plantilla guardada correctamente');
+      setForm({ nombre: '', tipo: 'combi' });
+      setMatriz(Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => '')));
+    } catch (err) {
+      console.error(err);
+      toast.error('❌ Error al guardar la plantilla');
     }
   };
 
-  const plantillasUsadas = unidades.map(u => u.id_plantilla);
-  const conductoresUsados = unidades.map(u => u.id_conductor);
+  const { asientos, pasillos, conductor } = contarTipos();
 
   return (
-    <div className="form-container">
-      <h2>🚌 Crear nuevo viaje</h2>
-      {mensaje && <p className="mensaje-error">{mensaje}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="campo">
-          <label>Origen:</label>
-          <select value={origen} onChange={e => setOrigen(e.target.value)} required>
-            <option value="">Selecciona origen</option>
-            {lugares.map(l => (
-              <option key={l.id} value={l.nombre}>{l.nombre}</option>
+    <div className="plantilla-container">
+      <h2>Crear Plantilla de Unidad</h2>
+
+      <form onSubmit={handleSubmit} className="plantilla-form">
+        <label>Nombre:</label>
+        <input name="nombre" value={form.nombre} onChange={handleInputChange} required />
+
+        <label>Tipo de unidad:</label>
+        <select name="tipo" value={form.tipo} onChange={handleInputChange}>
+          <option value="combi">Combi</option>
+          <option value="autobus">Autobús</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <div className="selector-tipo">
+          <strong>Modo actual:</strong>
+          <button type="button" onClick={() => setTipoActivo('asiento')} className={tipoActivo === 'asiento' ? 'activo' : ''}>🟩 Asiento</button>
+          <button type="button" onClick={() => setTipoActivo('pasillo')} className={tipoActivo === 'pasillo' ? 'activo' : ''}>🟨 Pasillo</button>
+          <button type="button" onClick={() => setTipoActivo('conductor')} className={tipoActivo === 'conductor' ? 'activo' : ''}>🧑‍✈️ Conductor</button>
+          <button type="button" onClick={() => setTipoActivo('eliminado')} className={tipoActivo === 'eliminado' ? 'activo' : ''}>🗑 Eliminar</button>
+          <button type="button" onClick={() => setTipoActivo('borrar')} className={tipoActivo === 'borrar' ? 'activo' : ''}>❌ Borrar tipo</button>
+        </div>
+
+        <div className="matriz-wrapper">
+          <div className="matriz">
+            {matriz.map((fila, i) => (
+              <div key={`fila-${i}`} className="fila">
+                {fila.map((tipo, j) => {
+                  const indexPlano = i * matriz[0].length + j;
+                  const numeroAsiento = `A${matriz.flat().filter((t, idx) => t === 'asiento' && idx < indexPlano).length + 1}`;
+                  const isFirstConductor = tipo === 'conductor' && (j === 0 || fila[j - 1] !== 'conductor');
+
+                  const contenido =
+                    tipo === 'asiento' ? numeroAsiento :
+                    tipo === 'conductor' && isFirstConductor ? 'C' :
+                    tipo === 'pasillo' ? 'P' : '';
+
+                  return (
+                    <button
+                      key={`${i}-${j}`}
+                      type="button"
+                      className={`celda ${tipo || 'vacia'}`}
+                      onMouseDown={() => {
+                        cambiarTipoCelda(i, j);
+                        setPintando(true);
+                      }}
+                      onMouseOver={() => {
+                        if (pintando) cambiarTipoCelda(i, j);
+                      }}
+                      onMouseUp={() => setPintando(false)}
+                    >
+                      {contenido}
+                    </button>
+                  );
+                })}
+              </div>
             ))}
-          </select>
-        </div>
-
-        <div className="campo">
-          <label>Destino:</label>
-          <select value={destino} onChange={e => setDestino(e.target.value)} required>
-            <option value="">Selecciona destino</option>
-            {lugares.filter(l => l.nombre !== origen).map(l => (
-              <option key={l.id} value={l.nombre}>{l.nombre}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="campo">
-          <label>Fecha:</label>
-          <input type="date" value={fecha} onChange={e => setFecha(e.target.value)} required />
-        </div>
-
-        <div className="campo">
-          <label>Hora:</label>
-          <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
-        </div>
-
-        <div className="campo">
-          <label>Precio:</label>
-          <input type="number" placeholder="Precio" value={precio} onChange={e => setPrecio(e.target.value)} required />
-        </div>
-
-        <div className="campo">
-          <label>Unidades:</label>
-          <input type="number" min={1} value={numeroUnidades} onChange={e => setNumeroUnidades(parseInt(e.target.value) || 1)} required />
-        </div>
-
-        {unidades.map((unidad, i) => (
-          <div key={i} className="unidad-box">
-            <h4>Unidad #{i + 1}</h4>
-            <select value={unidad.id_plantilla} onChange={e => handleUnidadChange(i, 'id_plantilla', e.target.value)} required>
-              <option value="">Seleccionar plantilla</option>
-              {plantillasUnidad.filter(p => !plantillasUsadas.includes(String(p.id)) || String(p.id) === unidad.id_plantilla).map(p => (
-                <option key={p.id} value={p.id}>{p.nombre} ({p.tipo})</option>
-              ))}
-            </select>
-            <select value={unidad.id_conductor} onChange={e => handleUnidadChange(i, 'id_conductor', e.target.value)} required>
-              <option value="">Seleccionar conductor</option>
-              {conductores.filter(c => !conductoresUsados.includes(String(c.id)) || String(c.id) === unidad.id_conductor).map(c => (
-                <option key={c.id} value={c.id}>{c.nombre}</option>
-              ))}
-            </select>
           </div>
-        ))}
 
-        <div className="campo">
-          <label>Paradas extra (subida):</label>
-          <select value={paradaSubida} onChange={e => setParadaSubida(e.target.value)}>
-            <option value="">Sin paradas</option>
-            {paradas.map(p => (
-              <option key={p.id} value={p.id}>{p.nombre}</option>
-            ))}
-          </select>
+          <div className="botones-globales">
+            <button type="button" onClick={agregarFila}>➕ Agregar fila</button>
+            <button type="button" onClick={eliminarFila}>➖ Eliminar fila</button>
+            <button type="button" onClick={agregarColumna}>➕ Agregar columna</button>
+            <button type="button" onClick={eliminarColumna}>➖ Eliminar columna</button>
+          </div>
         </div>
 
-        <div className="campo">
-          <label>Paradas extra (bajada):</label>
-          <select value={paradaBajada} onChange={e => setParadaBajada(e.target.value)}>
-            <option value="">Sin paradas</option>
-            {paradas.map(p => (
-              <option key={p.id} value={p.id}>{p.nombre}</option>
-            ))}
-          </select>
+        <div className="contador">
+          <span>🟩 Asientos: {asientos}</span>
+          <span>🟨 Pasillos: {pasillos}</span>
+          <span>🧑‍✈️ Conductor: {conductor}</span>
         </div>
 
-        <button type="submit">Crear viaje</button>
+        <button type="submit" className="btn-guardar">Guardar Plantilla</button>
       </form>
     </div>
   );
