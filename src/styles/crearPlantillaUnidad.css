@@ -161,3 +161,8 @@
   text-align: center;
   color: #2980B9;
 }
+
+.celda {
+  display: flex !important;
+  visibility: visible !important;
+}
