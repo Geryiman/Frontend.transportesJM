@@ -22,8 +22,6 @@ import ReservarViaje from './pages/ReservarViaje.jsx';
 import ParadasExtras from './pages/admin/ParadasExtras.jsx';
 import MisViajes from './pages/MisViajes.jsx';
 import Contactanos from './pages/Contactanos.jsx';
-import ListaViajesAdmin from './pages/admin/ListaViajesAdmin.jsx';
-import DetalleViaje from './pages/admin/DetalleViaje.jsx';
 
 
 function App() {
@@ -43,23 +41,6 @@ function App() {
         <Route path="/admin/panel-conductor" element={<PanelConductor />} />
         <Route path="/admin/panel-secretario" element={<PanelSecretario />} />
         <Route path="/usuario/perfil" element={<Perfil />} />
-        <Route
-          path="/admin/viajes"
-          element={
-            <ProtectedAdminRoute allowedRoles={['administrador_general']}>
-              <ListaViajesAdmin />
-            </ProtectedAdminRoute>
-          }
-        />
-        <Route
-          path="/admin/viajes/:id"
-          element={
-            <ProtectedAdminRoute allowedRoles={['administrador_general']}>
-              <DetalleViaje />
-            </ProtectedAdminRoute>
-          }
-        />
-
         <Route path='/usuario/reservarviaje' element={<ReservarViaje />} />
 
 
@@ -97,7 +78,6 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
-
         <Route
           path="/admin/ListaPlantillas"
           element={

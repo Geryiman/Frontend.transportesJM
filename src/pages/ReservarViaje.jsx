@@ -125,19 +125,10 @@ export default function ReservarViaje() {
           asiento: sel.asiento
         });
       }
-      toast.success('✅ Tu reserva fue enviada exitosamente. Espera la confirmación del administrador.', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'colored'
-      });
 
+      toast.success('✅ Reserva enviada. El administrador la confirmará pronto.');
       setEstado('confirmado');
-      setTimeout(() => navigate('/usuario/home'), 3500);
-
+      setTimeout(() => navigate('/'), 2000);
     } catch (err) {
       console.error(err);
       toast.error('Error al reservar: ' + (err.response?.data?.error || 'Error desconocido'));
@@ -216,17 +207,14 @@ export default function ReservarViaje() {
               {paradas.flatMap(p => {
                 try {
                   const lista = Array.isArray(p.lista) ? p.lista : JSON.parse(p.lista);
-                  return lista
-                    .filter(nombre => nombre !== reserva.parada_extra)
-                    .map((nombre, i) => (
-                      <option key={`bajada-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
-                    ));
+                  return lista.map((nombre, i) => (
+                    <option key={`bajada-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
+                  ));
                 } catch (error) {
                   return [];
                 }
               })}
             </select>
-
 
             <label style={{ color: 'black' }}>
               <input
@@ -248,11 +236,9 @@ export default function ReservarViaje() {
                   {paradas.flatMap(p => {
                     try {
                       const lista = Array.isArray(p.lista) ? p.lista : JSON.parse(p.lista);
-                      return lista
-                        .filter(nombre => nombre !== reserva.parada_bajada)
-                        .map((nombre, i) => (
-                          <option key={`subida-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
-                        ));
+                      return lista.map((nombre, i) => (
+                        <option key={`subida-${p.id}-${i}`} value={nombre.toString()}>{nombre}</option>
+                      ));
                     } catch (error) {
                       return [];
                     }
@@ -261,14 +247,12 @@ export default function ReservarViaje() {
               </>
             )}
 
-
             <div className="simbologia">
               <span><span className="cuadro disponible"></span> Disponible</span>
               <span><span className="cuadro ocupado"></span> Ocupado</span>
               <span><span className="cuadro seleccionado"></span> Seleccionado</span>
               <span><span className="cuadro conductor"></span> Conductor</span>
               <span><span className="cuadro pasillo"></span> Pasillo</span>
-              <p className='maximo'>Solo se pueden seleccionar 6 asientos por formulario</p>
             </div>
 
             {[...new Set(asientosInfo.map(a => a.id_unidad))].sort().map((unidadId, indexUnidad) => {
@@ -296,7 +280,7 @@ export default function ReservarViaje() {
                         <div
                           key={index}
                           className={`asiento ${ocupado ? 'ocupado' : ''} ${seleccionado ? 'seleccionado' : ''} ${asiento.tipo}`}
-                          style={{ gridColumn: (maxCol - asiento.col + 1), gridRow: asiento.fila }}
+                          style={{ gridColumn: asiento.col, gridRow: asiento.fila }}
                           onClick={() => asiento.tipo === 'asiento' && !ocupado && toggleAsiento(asiento.id_unidad, asiento.numero)}
                         >
                           {asiento.tipo === 'asiento' ? asiento.numero : asiento.tipo === 'pasillo' ? 'P' : 'C'}

@@ -2,16 +2,12 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #d9e8f0;
+  background-color: #f5f7fa;
   color: black;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.maximo {
-  color: #d80d0d;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
+
 .reserva-container h2,
 .reserva-container h3,
 .reserva-container h4 {
@@ -25,14 +21,12 @@
   gap: 10px;
   margin-bottom: 20px;
   align-items: center;
-  color: #000;
 }
 
 .form-busqueda select,
 .form-busqueda button {
   padding: 8px 12px;
   font-size: 1rem;
-  color: #000;
 }
 
 .lista-viajes {
@@ -40,18 +34,10 @@
   flex-wrap: wrap;
   gap: 15px;
   margin-top: 20px;
-  color: #000;
-
-}
-.viaje-card p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #555;
 }
 
 .viaje-card {
   background-color: #ffffff;
-  color: #000;
   border: 2px solid #ccc;
   border-radius: 8px;
   padding: 15px;
@@ -67,7 +53,6 @@
 
 .info-viaje p {
   margin: 5px 0;
-  color: #333;
 }
 
 .form-reserva {
@@ -182,8 +167,4 @@
 
 .conductor {
   background-color: #90caf9;
-}
-.h4 {
-  color: #1a1a1a;
-  margin-bottom: 10px;
 }
