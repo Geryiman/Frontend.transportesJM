@@ -57,7 +57,7 @@
   }
   
   .celda.vacia {
-    background-color: #ccc;
+    background-color: #1b1818;
     margin: 3px;
     border-radius: 8px;
   }
@@ -98,6 +98,7 @@
   
   .solo {
     border-radius: 8px;
+    background-color: #292724;
   }
   
   
@@ -158,6 +159,8 @@
     align-items: center;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
+    backface-visibility: visible;
+    background-color: silver;
   }
   .matriz, .fila {
     align-items: center;
