@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import '../../styles/crearusuario.css';
+import '../../styles/CrearUsuario.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
