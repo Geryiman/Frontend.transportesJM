@@ -17,11 +17,6 @@ export default function CrearPlantillaUnidad() {
     setMatriz(prev => {
       const nueva = prev.map(f => [...f]);
 
-      if (tipoActivo === 'conductor') {
-        const yaExiste = nueva.some(fila => fila.includes('conductor'));
-        if (yaExiste) return prev; // No permite más de uno
-      }
-
       nueva[fila][col] = tipoActivo === 'eliminado' ? 'eliminado' :
                          tipoActivo === 'borrar' ? '' : tipoActivo;
       return nueva;

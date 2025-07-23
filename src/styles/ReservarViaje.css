@@ -1,170 +1,93 @@
-.reserva-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #f5f7fa;
-  color: black;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.reservar-viaje-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.reserva-container h2,
-.reserva-container h3,
-.reserva-container h4 {
-  color: #1a1a1a;
-  margin-bottom: 15px;
-}
-
-.form-busqueda {
+.filtros {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1rem;
   margin-bottom: 20px;
+  justify-content: center;
   align-items: center;
 }
 
-.form-busqueda select,
-.form-busqueda button {
+.filtros select {
   padding: 8px 12px;
-  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+}
+
+.filtros button {
+  padding: 8px 16px;
+  background-color: #2b7a78;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filtros button:hover {
+  background-color: #205e5d;
 }
 
 .lista-viajes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
-.viaje-card {
+.card-viaje {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
   background-color: #ffffff;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  width: 230px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.viaje-card:hover {
-  border-color: #007BFF;
-  background-color: #e9f5ff;
-}
-
-.info-viaje p {
-  margin: 5px 0;
-}
-
-.form-reserva {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 25px;
+  justify-content: space-between;
+  transition: transform 0.2s;
 }
 
-.form-reserva input,
-.form-reserva select {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #aaa;
-  border-radius: 5px;
+.card-viaje:hover {
+  transform: translateY(-5px);
 }
 
-.form-reserva button {
-  padding: 12px;
-  background-color: #007BFF;
+.card-viaje h4 {
+  margin-bottom: 8px;
+  color: #17252a;
+}
+
+.card-viaje p {
+  margin: 4px 0;
+  color: #555;
+}
+
+.card-viaje button {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #3aafa9;
   color: white;
-  font-weight: bold;
   border: none;
-  border-radius: 5px;
-  transition: 0.3s ease;
-}
-
-.form-reserva button:hover {
-  background-color: #0056b3;
-}
-
-.unidades-grid {
-  margin-top: 15px;
-  margin-bottom: 30px;
-  gap: 5px;
-  justify-content: center;
-}
-
-.asiento {
-  width: 40px;
-  height: 40px;
   border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
   cursor: pointer;
-  border: 2px solid #444;
-  background-color: #e0e0e0;
-}
-
-.asiento.asiento {
-  background-color: #c8e6c9; /* verde claro */
-}
-
-.asiento.seleccionado {
-  background-color: #ffd54f; /* amarillo */
-  border-color: #ffca28;
-}
-
-.asiento.ocupado {
-  background-color: #e57373; /* rojo */
-  cursor: not-allowed;
-  border-color: #d32f2f;
-}
-
-.asiento.pasillo {
-  background-color: #ffe0b2; /* naranja claro */
-  cursor: default;
-}
-
-.asiento.conductor {
-  background-color: #f990d1; /* azul claro */
   font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-.simbologia {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin: 15px 0;
-  font-size: 0.95rem;
-  color: black;
+.card-viaje button:hover {
+  background-color: #2b7a78;
 }
 
-.cuadro {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-  vertical-align: middle;
-  border: 1px solid #333;
-}
-
-.disponible {
-  background-color: #c8e6c9;
-}
-
-.ocupado {
-  background-color: #e57373;
-}
-
-.seleccionado {
-  background-color: #ffd54f;
-}
-
-.pasillo {
-  background-color: #ffe0b2;
-}
-
-.conductor {
-  background-color: #90caf9;
+@media (max-width: 600px) {
+  .filtros {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

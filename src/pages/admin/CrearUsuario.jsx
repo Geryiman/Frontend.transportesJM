@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import '../../styles/crearusuario.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -11,17 +12,12 @@ export default function CrearUsuario() {
     rol: '',
   });
 
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
 
     try {
       const res = await fetch(`${API_URL}/admin/register`, {
@@ -36,22 +32,20 @@ export default function CrearUsuario() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || 'Error al registrar usuario');
+        toast.error(data.message || '❌ Error al registrar usuario');
         return;
       }
 
-      setSuccess('Usuario registrado correctamente');
+      toast.success('✅ Usuario registrado correctamente');
       setForm({ nombre: '', username: '', password: '', rol: '' });
     } catch (err) {
-      setError('Error de red o del servidor');
+      toast.error('❌ Error de red o del servidor');
     }
   };
 
   return (
     <div className="crear-usuario-container">
       <h2 className="crear-usuario-title">Crear Nuevo Usuario</h2>
-      {error && <p className="crear-usuario-error">{error}</p>}
-      {success && <p className="crear-usuario-success">{success}</p>}
 
       <form onSubmit={handleSubmit}>
         <label className="crear-usuario-label">Nombre completo:</label>
@@ -61,22 +55,22 @@ export default function CrearUsuario() {
           value={form.nombre}
           onChange={handleChange}
           className="crear-usuario-input"
-          placeholder='Nombre Real'
+          placeholder="Nombre Real"
           required
         />
 
         <label className="crear-usuario-label">Nombre de usuario:</label>
         <input
-        placeholder='Nombre de usuario'
           type="text"
           name="username"
           value={form.username}
           onChange={handleChange}
           className="crear-usuario-input"
+          placeholder="Nombre de usuario"
           required
         />
 
-        <label  className="crear-usuario-label">Contraseña:</label>
+        <label className="crear-usuario-label">Contraseña:</label>
         <input
           type="password"
           name="password"

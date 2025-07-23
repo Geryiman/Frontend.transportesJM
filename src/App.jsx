@@ -22,18 +22,24 @@ import ReservarViaje from './pages/ReservarViaje.jsx';
 import ParadasExtras from './pages/admin/ParadasExtras.jsx';
 import MisViajes from './pages/MisViajes.jsx';
 import Contactanos from './pages/Contactanos.jsx';
+import ViajesPanel from './pages/admin/ViajesPanel.jsx';
+import DetalleViaje from './pages/admin/DetalleViaje.jsx';
+import SeleccionarAsientos from './pages/SeleccionarAsientos.jsx';
+import ConfirmacionReserva from './pages/ConfirmacionReserva.jsx';
+import PagoConTarjeta from './pages/PagoConTarjeta.jsx';
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
+        <Route path="/pago-con-tarjeta" element={<PagoConTarjeta />} />
         <Route path="/" element={<Home />} />
         <Route path="/usuario/login" element={<Login />} />
         <Route path="/usuario/home" element={<HomePrivado />} />
         <Route path="/usuario/contacto" element={<Contactanos />} />
         <Route path="/contacto" element={<Contactanos />} />
-
         <Route path="/usuario/register" element={<Register />} />
         <Route path="/usuario/mis-viajes" element={<MisViajes />} />
         <Route path="/admin/login" element={<LoginAdmin />} />
@@ -42,6 +48,8 @@ function App() {
         <Route path="/admin/panel-secretario" element={<PanelSecretario />} />
         <Route path="/usuario/perfil" element={<Perfil />} />
         <Route path='/usuario/reservarviaje' element={<ReservarViaje />} />
+        <Route path="/reservar/:id_viaje/asientos" element={<SeleccionarAsientos />} />
+
 
 
 
@@ -54,6 +62,22 @@ function App() {
           }
         />
         <Route
+          path="/admin/viajes"
+          element={
+            <ProtectedAdminRoute allowedRoles={['administrador_general']}>
+              <ViajesPanel />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+          path="/admin/viaje/:id"
+          element={
+            <ProtectedAdminRoute allowedRoles={['administrador_general']}>
+              <DetalleViaje />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
           path="/admin/notificaciones"
           element={
             <ProtectedAdminRoute allowedRoles={['administrador_general']}>
@@ -61,6 +85,7 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
+
 
         <Route
           path="/admin/crear-usuario"
@@ -105,9 +130,20 @@ function App() {
 
 
 
+
         <Route path="/admin/acceso-denegado" element={<AccesoDenegado />} />
 
       </Routes>
+      <ToastContainer
+        position={window.innerWidth < 768 ? 'bottom-center' : 'top-right'}
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
 
     </BrowserRouter>
   );

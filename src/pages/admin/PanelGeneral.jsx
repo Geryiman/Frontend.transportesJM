@@ -26,6 +26,9 @@ export default function PanelGeneral() {
           <button className="panel-button" onClick={() => navigate('/admin/usuarios')}>
             Usuarios
           </button>
+          <button className="panel-button" onClick={() => navigate('/admin/viajes')}>
+            Viajes
+          </button>
           <button className="panel-button" onClick={() => navigate('/admin/notificaciones')}>
             Notificaciones
           </button>

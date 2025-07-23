@@ -31,7 +31,7 @@
     flex-direction: column;
     margin-top: 1rem;
     gap: 1rem;
-    background-color: beige;
+
   }
   
   .matriz {
@@ -52,22 +52,17 @@
     cursor: pointer;
     margin: 0; /* ← quitamos separación entre celdas */
     border-radius: 0; /* ← base sin bordes redondeados */
-    color: black;
-    background-color: rgb(83, 80, 80);
+    color: rgb(102, 93, 93);
+    background-color: rgb(105, 95, 95);
   }
   
   .celda.vacia {
-    background-color: #1b1818;
+    background-color: #8b8383;
     margin: 3px;
     border-radius: 8px;
   }
   
-  .celda.asiento {
-    background-color: #27AE60;
-    color: white;
-    margin: 3px;
-    border-radius: 8px;
-  }
+ 
   
 
   .celda.conductor {
@@ -75,7 +70,7 @@
   }
   
   .celda.pasillo {
-    background-color: #F39C12;
+    background-color: #e79613;
     color: white;
     margin: 3px;
     border-radius: 8px;
@@ -98,7 +93,7 @@
   
   .solo {
     border-radius: 8px;
-    background-color: #292724;
+    background-color: #5c5956;
   }
   
   
@@ -160,7 +155,7 @@
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
     backface-visibility: visible;
-    background-color: silver;
+    background-color: rgb(20, 18, 18);
   }
   .matriz, .fila {
     align-items: center;
@@ -179,4 +174,60 @@
     text-align: center;
     color: #2980B9;
   }
-  
+  /* Estilos responsivos */
+@media (max-width: 768px) {
+  .plantilla-container {
+    padding: 10px;
+  }
+
+  .plantilla-form {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .selector-tipo button {
+    padding: 6px 10px;
+    margin: 4px 2px;
+    font-size: 12px;
+  }
+
+  .matriz {
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+  }
+
+  .matriz .fila {
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .celda {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin: 1px;
+  }
+
+  .contador span {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .botones-globales button {
+    margin: 4px 2px;
+    font-size: 13px;
+  }
+
+  .btn-guardar {
+    font-size: 15px;
+    padding: 10px;
+    width: 100%;
+  }
+}
+ .celda.asiento {
+    background-color: #11572e;
+    color: white;
+    margin: 3px;
+    border-radius: 8px;
+  }

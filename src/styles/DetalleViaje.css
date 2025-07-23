@@ -1,78 +1,167 @@
 .detalle-viaje {
-  padding: 20px;
-  color: black;
+  padding: 30px;
 }
 
-.btn-volver {
-  display: inline-block;
-  margin-bottom: 20px;
-  color: white;
-  background-color: #007bff;
-  padding: 6px 12px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.unidad {
-  margin-bottom: 40px;
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-}
-
-.plantilla {
-  margin-top: 10px;
-  display: inline-block;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-.fila {
-  display: flex;
+.grid-plantilla {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 15px;
 }
 
 .celda {
-  width: 45px;
-  height: 45px;
-  margin: 2px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: bold;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  color: white;
+  cursor: default;
 }
 
-.celda.asiento {
-  background-color: #d1e7dd;
+.celda.asiento.libre {
+  background-color: #4caf50; /* Verde */
 }
 
-.celda.asiento.confirmado {
-  background-color: #198754;
+.celda.asiento.pendiente,
+.celda.asiento.confirmada {
+  background-color: #ff9800; /* Naranja */
   color: white;
 }
 
-.celda.asiento.pendiente {
-  background-color: #ffc107;
-}
-
 .celda.pasillo {
-  background-color: #ffeeba;
+  background-color: #e0e0e0;
+  color: #000;
 }
 
 .celda.conductor {
-  background-color: #cfe2ff;
+  background-color: #2196f3;
+  color: white;
 }
 
-.celda.vacia {
+.celda.vacio {
   background-color: transparent;
-  border: none;
+  border: 1px dashed #ccc;
 }
 
-.no-asientos {
-  color: #888;
-  font-style: italic;
+.badge-pagado {
+  color: green;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.badge-pendiente {
+  color: red;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.btn-confirmar {
+  margin-left: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn-confirmar:hover {
+  background-color: #1976d2;
+}
+
+/* Colores únicos por grupo (máximo 10) */
+.grupo-0 { background-color: #f44336 !important; } /* rojo */
+.grupo-1 { background-color: #9c27b0 !important; } /* morado */
+.grupo-2 { background-color: #3f51b5 !important; }
+.grupo-3 { background-color: #03a9f4 !important; }
+.grupo-4 { background-color: #4caf50 !important; }
+.grupo-5 { background-color: #ff9800 !important; }
+.grupo-6 { background-color: #795548 !important; }
+.grupo-7 { background-color: #607d8b !important; }
+.grupo-8 { background-color: #e91e63 !important; }
+.grupo-9 { background-color: #00bcd4 !important; }
+
+/* Leyenda */
+.leyenda {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leyenda-item .cuadro {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+/* Tooltips visuales */
+.celda {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  background-color: rgba(0,0,0,0.75);
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.celda:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Responsive grid de plantilla */
+@media screen and (max-width: 768px) {
+  .grid-plantilla {
+    gap: 3px;
+  }
+
+  .celda {
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  .tooltip-text {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .celda {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .tooltip-text {
+    font-size: 9px;
+    padding: 4px 6px;
+  }
 }
