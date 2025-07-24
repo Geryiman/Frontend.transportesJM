@@ -24,7 +24,7 @@ export default function HomePrivado() {
 
       <section className="hero" style={{ backgroundImage: 'url(https://i.ibb.co/SGLQMrM/Imagen-de-Whats-App-2025-05-06-a-las-00-35-01-3cb20b09.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <h1>{saludo}, {usuario?.nombre || 'Usuario'}</h1>
-        <p>Gracias por usar Transportes JM. Consulta tus viajes y reserva con comodidad.</p>
+        <p className='hero-description'>Gracias por usar Transportes JM. Consulta tus viajes y reserva con comodidad.</p>
       </section>
 
       <section className="destinos">

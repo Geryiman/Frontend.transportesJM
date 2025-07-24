@@ -90,7 +90,7 @@ a:hover {
 
 /* 🎯 Sección de bienvenida (Hero) */
 .hero {
-  background-image: url('https://i.ibb.co/0VzBQxJd/Imagen-de-Whats-App-2025-05-06-a-las-00-35-00-57684a3f.jpg');
+  background-image: url('https://i.ibb.co/HTK0PtCf/imagen-de-fondo.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -100,7 +100,7 @@ a:hover {
   min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
   backdrop-filter: brightness(0.25); /* Oscurece ligeramente la imagen de fondo */
 }
 
@@ -234,9 +234,12 @@ a:hover {
   cursor: grab;
 }
 
-/* 🧠 En móviles también se pausa al tocar */
-@media (hover: none) {
-  .slider:active .slide-track {
-    animation-play-state: paused;
-  }
+
+
+.hero-description {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: white;
+  max-width: 600px;
+  margin: 0 auto; /* Centra el texto */
 }
