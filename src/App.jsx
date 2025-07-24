@@ -32,6 +32,7 @@ import PagoConTarjeta from './pages/PagoConTarjeta.jsx';
 
 function App() {
   return (
+
     <BrowserRouter>
       <Routes>
         <Route path="/confirmacion-reserva" element={<ConfirmacionReserva />} />
@@ -145,7 +146,6 @@ function App() {
         draggable
         theme="colored"
       />
-
     </BrowserRouter>
   );
 }
