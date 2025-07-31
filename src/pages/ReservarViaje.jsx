@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import '../styles/ReservarViaje.css'; // ✅ Importación del CSS
+import '../styles/ReservarViaje.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -22,7 +22,7 @@ export default function ReservarViaje() {
         setOrigenes([...new Set(datos.map(v => v.origen))]);
         setDestinos([...new Set(datos.map(v => v.destino))]);
       })
-      .catch(() => toast.error("❌ Error al obtener viajes disponibles"));
+      .catch(() => toast.error("Error al obtener viajes disponibles"));
   }, []);
 
   const buscarViajes = () => {

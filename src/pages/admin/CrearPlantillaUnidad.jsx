@@ -70,7 +70,7 @@ export default function CrearPlantillaUnidad() {
     matriz.forEach((fila, i) =>
       fila.forEach((tipo, j) => {
         if (tipo && tipo !== 'eliminado') {
-          const celda = { fila: i + 1, col: j + 1, tipo }; // 🔄 YA NO se invierte col
+          const celda = { fila: i + 1, col: j + 1, tipo }; 
           if (tipo === 'asiento') {
             celda.numero = `A${contadorAsientos}`;
             contadorAsientos++;
@@ -83,7 +83,7 @@ export default function CrearPlantillaUnidad() {
 
     const { conductor } = contarTipos();
     if (!form.nombre || !form.tipo || total_asientos === 0 || conductor === 0) {
-      toast.warning('⚠️ Completa todos los campos, incluye al menos un asiento y un conductor');
+      toast.warning('Completa todos los campos, incluye al menos un asiento y un conductor');
       return;
     }
 
@@ -95,12 +95,12 @@ export default function CrearPlantillaUnidad() {
         estructura_asientos: estructura
       });
 
-      toast.success('✅ Plantilla guardada correctamente');
+      toast.success('Plantilla guardada correctamente');
       setForm({ nombre: '', tipo: 'combi' });
       setMatriz(Array.from({ length: 4 }, () => Array.from({ length: 4 }, () => '')));
     } catch (err) {
       console.error(err);
-      toast.error('❌ Error al guardar la plantilla');
+      toast.error('Error al guardar la plantilla');
     }
   };
 

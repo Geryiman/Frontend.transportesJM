@@ -39,7 +39,7 @@ export default function CrearViaje() {
       setLugares(lugaresRes.data);
     } catch (error) {
       console.error('Error al cargar datos:', error);
-      toast.error('❌ Error al cargar datos. Verifica que el backend esté activo.');
+      toast.error(' Error al cargar datos. Verifica que el backend esté activo.');
     }
   };
 
@@ -53,15 +53,15 @@ export default function CrearViaje() {
     e.preventDefault();
 
     if (!origen || !destino || !fecha || !hora || !precio) {
-      return toast.error('❌ Todos los campos son obligatorios');
+      return toast.error(' Todos los campos son obligatorios');
     }
 
     if (origen === destino) {
-      return toast.error('❌ Origen y destino no pueden ser iguales');
+      return toast.error(' Origen y destino no pueden ser iguales');
     }
 
     if (numeroUnidades < 1 || unidades.some(u => !u.id_plantilla || !u.id_conductor)) {
-      return toast.error('❌ Completa plantilla y conductor para todas las unidades');
+      return toast.error(' Completa plantilla y conductor para todas las unidades');
     }
 
     try {
@@ -76,7 +76,7 @@ export default function CrearViaje() {
         unidades
       });
 
-      toast.success('✅ Viaje creado correctamente');
+      toast.success(' Viaje creado correctamente');
 
       // Reiniciar formulario
       setOrigen('');
@@ -98,7 +98,7 @@ export default function CrearViaje() {
   return (
     <>
       <div className="form-container">
-        <h2>🚌 Crear nuevo viaje</h2>
+        <h2>Crear nuevo viaje</h2>
         <form onSubmit={handleSubmit}>
           <div className="campo">
             <label>Origen:</label>
