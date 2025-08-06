@@ -34,7 +34,7 @@ export default function Notificaciones() {
       const agrupadas = agruparSolicitudes(res.data);
       setSolicitudes(agrupadas);
     } catch {
-      toast.error('❌ Error al cargar las solicitudes');
+      toast.error('Error al cargar las solicitudes');
     }
   };
 
@@ -93,7 +93,7 @@ export default function Notificaciones() {
       const res = await axios.get(`${API_URL}/viajes/${unidadId}/asientos`);
       setEstructuraMapas(prev => ({ ...prev, [unidadId]: res.data.estructuras }));
     } catch {
-      toast.error('❌ Error al obtener mapa de asientos');
+      toast.error(' Error al obtener mapa de asientos');
     }
   };
 
@@ -104,30 +104,34 @@ export default function Notificaciones() {
       for (const r of grupo) {
         await axios.put(`${API_URL}/admin/reservas/${r.id}/confirmar`, null, config);
       }
-      toast.success('✅ Reservas confirmadas');
+      toast.success(' Reservas confirmadas');
       obtenerSolicitudes();
     } catch {
-      toast.error('❌ Error al confirmar reservas');
+      toast.error(' Error al confirmar reservas');
     }
   };
 
   const rechazarReserva = async (grupo) => {
-    try {
-      const token = localStorage.getItem('adminToken');
-      const config = { headers: { Authorization: `Bearer ${token}` } };
-      for (const r of grupo) {
-        await axios.put(`${API_URL}/admin/reservas/${r.id}/rechazar`, null, config);
-      }
-      toast.success('❌ Reservas rechazadas');
-      obtenerSolicitudes();
-    } catch {
-      toast.error('❌ Error al rechazar reservas');
+  try {
+    const token = localStorage.getItem('adminToken');
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+
+    for (const r of grupo) {
+      await axios.delete(`${API_URL}/admin/reservas/${r.id}/rechazar`, config);
     }
-  };
+
+    toast.success('Reservas rechazadas');
+    obtenerSolicitudes();
+  } catch (err) {
+    console.error(err);
+    toast.error('Error al rechazar reservas');
+  }
+};
+
 
   return (
     <div className="notificaciones-container">
-      <h2>🔔 Solicitudes de Reservas</h2>
+      <h2>Solicitudes de Reservas</h2>
 
       <div className="filtros">
         <label>Filtrar por:</label>
