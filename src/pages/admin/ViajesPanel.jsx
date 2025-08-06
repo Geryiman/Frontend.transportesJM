@@ -14,7 +14,7 @@ export default function ViajesPanel() {
     axios.get(`${API_URL}/viajes-detalle`)
       .then(res => setViajes(res.data))
       .catch(err => {
-        console.error('❌ Error al cargar viajes:', err);
+        console.error('Error al cargar viajes:', err);
       });
   }, []);
 
