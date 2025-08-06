@@ -12,8 +12,8 @@ export default function Home() {
                 <h1>Bienvenido a Transportes JM</h1>
                 <p className="hero-description">Viajes seguros, cómodos y al mejor precio. Explora el país con nosotros.</p>
                 <div className="buttons">
-                    <a href="/usuario/Login"><button>Iniciar Sesión</button></a>
-                    <a href="/usuario/Register"><button>Registrarse</button></a>
+                    <a href="/usuario/login"><button>Iniciar Sesión</button></a>
+                    <a href="/usuario/register"><button>Registrarse</button></a>
                 </div>
             </section>
 
