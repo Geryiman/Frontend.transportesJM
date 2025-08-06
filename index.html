@@ -8,5 +8,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log('✅ SW registrado:', registration);
+      }).catch((err) => {
+        console.error('❌ Error al registrar SW:', err);
+      });
+  }
+</script>
+
   </body>
 </html>
