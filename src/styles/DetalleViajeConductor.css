@@ -1,0 +1,196 @@
+.detalle-viaje {
+  padding: 30px;
+  color: #222;
+}
+
+/* Mapa de la unidad */
+.grid-plantilla {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.fila {
+  display: flex;
+}
+
+.celda {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  cursor: default;
+  position: relative;
+}
+
+.celda.asiento.libre {
+  background-color: #4caf50; /* Verde */
+}
+
+.celda.asiento.confirmada {
+  background-color: #ff9800; /* Naranja por defecto */
+}
+
+.celda.pasillo {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.celda.conductor {
+  background-color: #2196f3;
+  color: white;
+}
+
+.celda.vacio {
+  background-color: transparent;
+  border: 1px dashed #ccc;
+}
+
+/* Tabla de pasajeros */
+.tabla-pasajeros {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  color: #000;
+  border-bottom: #000;
+}
+
+.tabla-pasajeros th,
+.tabla-pasajeros td {
+  padding: 8px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Grupo de colores únicos (máximo 10) */
+.grupo-0 { background-color: #f0938c !important; } /* rojo */
+.grupo-1 { background-color: #d388e0 !important; } /* morado */
+.grupo-2 { background-color: #3f51b5 !important; } /* azul fuerte */
+.grupo-3 { background-color: #81c2e0 !important; } /* celeste */
+.grupo-4 { background-color: #4caf50 !important; } /* verde */
+.grupo-5 { background-color: #ff9800 !important; } /* naranja */
+.grupo-6 { background-color: #dd6d44 !important; } /* café */
+.grupo-7 { background-color: #607d8b !important; } /* gris azulado */
+.grupo-8 { background-color: #e91e63 !important; } /* rosa intenso */
+.grupo-9 { background-color: #00bcd4 !important; } /* turquesa */
+
+/* Tooltips */
+.tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  background-color: rgba(112, 0, 0, 0.75);
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.celda:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Pago y edición */
+.pago-pequeño {
+  font-size: 12px;
+  color: #444;
+}
+
+.inputs-mixto {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.inputs-mixto input {
+  width: 100px;
+  padding: 4px;
+  font-size: 0.9rem;
+}
+
+/* Botón de cuentas */
+.btn-cuentas {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #2629c5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.btn-cuentas:hover {
+  background-color: #3f429e;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .grid-plantilla {
+    gap: 3px;
+  }
+
+  .celda {
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  .tooltip-text {
+    font-size: 10px;
+  }
+
+  .tabla-pasajeros th,
+  .tabla-pasajeros td {
+    font-size: 12px;
+    padding: 6px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .celda {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .tooltip-text {
+    font-size: 9px;
+    padding: 4px 6px;
+  }
+
+  .tabla-pasajeros th,
+  .tabla-pasajeros td {
+    font-size: 11px;
+    padding: 5px;
+  }
+
+  .inputs-mixto input {
+    width: 80px;
+    font-size: 0.85rem;
+  }
+
+  .btn-cuentas {
+    width: 100%;
+    text-align: center;
+  }
+}

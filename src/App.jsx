@@ -28,6 +28,9 @@ import DetalleViaje from './pages/admin/DetalleViaje.jsx';
 import SeleccionarAsientos from './pages/SeleccionarAsientos.jsx';
 import ConfirmacionReserva from './pages/ConfirmacionReserva.jsx';
 import PagoConTarjeta from './pages/PagoConTarjeta.jsx';
+import DetalleViajeConductor from './pages/admin/DetalleViajeConductor.jsx';
+import CuentasViajeConductor from './pages/admin/CuentasViajeConductor.jsx';
+
 
 
 function App() {
@@ -51,9 +54,23 @@ function App() {
         <Route path="/usuario/perfil" element={<Perfil />} />
         <Route path='/usuario/reservarviaje' element={<ReservarViaje />} />
         <Route path="/reservar/:id_viaje/asientos" element={<SeleccionarAsientos />} />
-
-
-
+        <Route path="/reservar/:id_viaje/confirmacion" element={<ConfirmacionReserva />} />
+        <Route
+          path="/admin/panel-conductor/viaje/:id"
+          element={
+            <ProtectedAdminRoute allowedRoles={['conductor']}>
+              <DetalleViajeConductor />
+            </ProtectedAdminRoute>
+          }
+        />
+        <Route
+         path="/admin/cuentas-viaje-conductor/:id"
+         element={
+           <ProtectedAdminRoute allowedRoles={['conductor']}>
+             <CuentasViajeConductor />
+           </ProtectedAdminRoute>
+          }
+         />
 
         <Route
           path="/admin/CrearPlantillaUnidad"
