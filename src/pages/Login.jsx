@@ -48,7 +48,6 @@ export default function Login() {
       } else {
         localStorage.setItem('token', data.token);
         localStorage.setItem('usuario', JSON.stringify(data.user));
-        setUsuarioId(data.user.id);
         navigate('/usuario/home');
       }
     } catch (err) {
