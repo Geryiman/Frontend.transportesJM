@@ -1,47 +1,53 @@
 // src/hooks/useNotificaciones.js
 import { useEffect } from 'react';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { messaging } from '../firebase-config';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { initializeApp } from 'firebase/app';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const firebaseConfig = {
+  apiKey: "AIzaSyCkTkINb4eNvETqSmMvHZTBTyxNseuKO4w",
+  authDomain: "transportesjm-d72d3.firebaseapp.com",
+  projectId: "transportesjm-d72d3",
+  storageBucket: "transportesjm-d72d3.appspot.com",
+  messagingSenderId: "29195739631",
+  appId: "1:29195739631:web:d12f3339c934ae0e9d5b5a"
+};
 
-export default function useNotificaciones(idUsuario, tipo = 'usuario') {
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+const vapidKey = import.meta.env.VITE_VAPID_KEY;
+
+const useNotificaciones = () => {
   useEffect(() => {
-    if (!idUsuario || !messaging) return;
-
     const obtenerToken = async () => {
       try {
-        const token = await getToken(messaging, {
-          vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY
-        });
+        const permission = await Notification.requestPermission();
+
+        if (permission !== 'granted') {
+          console.warn('🚫 Permiso de notificación denegado');
+          return;
+        }
+
+        const token = await getToken(messaging, { vapidKey });
 
         if (token) {
-          console.log('✅ Token FCM generado:', token);
-
-          // Enviar al backend
-          await axios.post(`${API_URL}/notificaciones/guardar-token`, {
-            id: idUsuario,
-            tipo,
-            token,
-          });
-
-          toast.success('🔔 Notificaciones habilitadas');
+          console.log('✅ Token FCM:', token);
+          // Puedes enviarlo al backend si lo necesitas
         } else {
-          console.warn('⚠️ No se pudo generar el token FCM');
+          console.warn('⚠️ No se obtuvo token de FCM');
         }
-      } catch (err) {
-        console.error('❌ Error al obtener token FCM:', err);
+      } catch (error) {
+        console.error('❌ Error al obtener token FCM:', error);
       }
     };
 
     obtenerToken();
 
-    // Escuchar mensajes entrantes (foreground)
     onMessage(messaging, (payload) => {
-      console.log('📩 Mensaje recibido en foreground:', payload);
-      toast.info(`🔔 ${payload.notification?.title || 'Notificación recibida'}`);
+      console.log('📩 Mensaje en primer plano:', payload);
+      // Aquí puedes mostrar un toast, modal o notificación local
     });
-  }, [idUsuario]);
-}
+  }, []);
+};
+
+export default useNotificaciones;
