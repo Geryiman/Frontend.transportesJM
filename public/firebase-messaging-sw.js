@@ -3,7 +3,7 @@ importScripts('https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/10.5.2/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  apiKey: "AIzaSyA7d0vBbfFbyVcTIgybUDdnWpUHr iO3g4w",
+  apiKey: "AIzaSyA7d0vBbfFbyVcTIgybUDdnWpUHriO3g4w",
   authDomain: "transportesjm-d72d3.firebaseapp.com",
   projectId: "transportesjm-d72d3",
   storageBucket: "transportesjm-d72d3.appspot.com",
