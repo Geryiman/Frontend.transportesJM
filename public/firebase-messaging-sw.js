@@ -26,3 +26,17 @@ messaging.onBackgroundMessage((payload) => {
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+self.addEventListener('push', function (event) {
+  const data = event.data.json();
+  console.log('🔔 Push recibido:', data);
+
+  const options = {
+    body: data.notification.body,
+    icon: '/icon.png',
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.notification.title, options)
+  );
+});

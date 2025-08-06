@@ -1,41 +1,47 @@
-export default function useNotificaciones(id, tipo = 'usuario') {
+// src/hooks/useNotificaciones.js
+import { useEffect } from 'react';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { messaging } from '../firebase-config';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+export default function useNotificaciones(idUsuario, tipo = 'usuario') {
   useEffect(() => {
-    if (!id) {
-      console.warn('⚠️ No hay ID para notificación');
-      return;
-    }
+    if (!idUsuario || !messaging) return;
 
-    console.log('✅ Ejecutando useNotificaciones para ID:', id);
+    const obtenerToken = async () => {
+      try {
+        const token = await getToken(messaging, {
+          vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY
+        });
 
-    Notification.requestPermission().then(async (permiso) => {
-      console.log('🔐 Permiso de notificación:', permiso);
+        if (token) {
+          console.log('✅ Token FCM generado:', token);
 
-      if (permiso === 'granted') {
-        try {
-          const token = await getToken(messaging, {
-            vapidKey: 'BDmwWifvJ1Uumes8Wu2Jb9fjQ9BcfYdxEBXF8HxT86CGTgWy8NhEGqmmwQZ0M4Wooz9eUHW0AyGCyqEm5QkKu0'
+          // Enviar al backend
+          await axios.post(`${API_URL}/notificaciones/guardar-token`, {
+            id: idUsuario,
+            tipo,
+            token,
           });
 
-          if (token) {
-            console.log('📲 Token generado:', token);
-
-            await axios.put(`${API_URL}/notificacion/${tipo}/${id}`, { token });
-
-            console.log('✅ Token FCM enviado al backend y guardado');
-          } else {
-            console.warn('❌ No se generó token');
-          }
-        } catch (error) {
-          console.error('❌ Error al obtener o guardar el token:', error);
+          toast.success('🔔 Notificaciones habilitadas');
+        } else {
+          console.warn('⚠️ No se pudo generar el token FCM');
         }
-      } else {
-        console.warn('⚠️ Permiso de notificación no otorgado');
+      } catch (err) {
+        console.error('❌ Error al obtener token FCM:', err);
       }
-    });
+    };
 
-    onMessage((payload) => {
-      const { title, body } = payload.notification;
-      alert(`${title}: ${body}`);
+    obtenerToken();
+
+    // Escuchar mensajes entrantes (foreground)
+    onMessage(messaging, (payload) => {
+      console.log('📩 Mensaje recibido en foreground:', payload);
+      toast.info(`🔔 ${payload.notification?.title || 'Notificación recibida'}`);
     });
-  }, [id]);
+  }, [idUsuario]);
 }
