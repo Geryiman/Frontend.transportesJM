@@ -81,3 +81,35 @@
     padding: 1rem;
   }
 }
+
+.seccion-viajes.hoy h3 {
+  color: #007BFF;
+}
+
+.seccion-viajes.proximos h3 {
+  color: #28a745;
+}
+
+.seccion-viajes.pasados h3 {
+  color: #dc3545;
+}
+
+.tarjeta-viaje {
+  background-color: #f8f9fa;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.tarjeta-viaje:hover {
+  background-color: #e9ecef;
+}
+
+.lista-viajes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
