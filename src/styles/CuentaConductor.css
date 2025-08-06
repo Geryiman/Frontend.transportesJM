@@ -1,0 +1,47 @@
+.cuentas-viaje {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.cuentas-viaje h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cuentas-viaje label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.cuentas-viaje input,
+.cuentas-viaje textarea {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-guardar {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background: #0056b3;
+}
+
+.mensaje {
+  margin: 10px 0;
+  color: green;
+  font-weight: bold;
+}
