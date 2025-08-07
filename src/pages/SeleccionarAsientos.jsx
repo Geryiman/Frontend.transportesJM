@@ -170,7 +170,7 @@ export default function SeleccionarAsientos() {
 
         <label>Método de pago:</label>
         <select value={reserva.metodo_pago} onChange={e => setReserva({ ...reserva, metodo_pago: e.target.value })}>
-          <option value="efectivo">En terminal</option>
+          <option value="efectivo">Efectivo</option>
 
         </select>
 
